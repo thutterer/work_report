@@ -70,6 +70,7 @@ class PostsController < BaseController
     :title,
     :content_md,
     :draft,
+    :workday,
     :updated_at
     )
   end
