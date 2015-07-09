@@ -29,6 +29,13 @@ gem 'railsbricks'
 # Bootstrap 3: https://github.com/twbs/bootstrap-sass
 gem 'bootstrap-sass', '3.3.5.1'
 
+# JavaScript runtime
+gem 'execjs'
+gem 'therubyracer'
+
+# MailCatcher as simple SMTP server
+gem 'mailcatcher'
+
 group :development, :test do
   gem 'byebug', '5.0.0'
   gem 'web-console', '2.1.3'
