@@ -8,13 +8,23 @@
 
 <%= form_for [@post], role: "form" do |f| %>
 
+<%= f.hidden_field :title, :autofocus => true, class: "form-control monospaced-control", placeholder: "Title (also used for URL slug)..." %>
+
 <div class="form-group">
-  <%= f.label :title %>
-  <div class="row">
-    <div class="col-xs-12">
-      <%= f.text_field :title, :autofocus => true, class: "form-control monospaced-control", placeholder: "Title (also used for URL slug)..." %>
-    </div>
+  <%= f.label :workday, "Day" %>
+  <div class='input-group date' id='workday_picker'>
+    <input type='text' class="form-control" name='post[workday]' value='<%= if defined? @post.workday.strftime then @post.workday.strftime("%Y-%m-%d") else '' end %>>' />
+    <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+    </span>
   </div>
+  <script type="text/javascript">
+      $(function () {
+          $('#workday_picker').datetimepicker({
+              format: 'YYYY-MM-DD'
+          });
+      });
+  </script>
 </div>
 
 <div class="form-group">
@@ -30,15 +40,6 @@
   <div class="row">
     <div class="col-xs-12">
       <%= f.check_box :draft %> <%= f.label :draft, "draft" %>
-    </div>
-  </div>
-</div>
-
-<div class="form-group">
-  <%= f.label :workday, "Day" %>
-  <div class="row">
-    <div class="col-xs-12">
-      <%= f.datetime_select :workday, class: "form-control" %>
     </div>
   </div>
 </div>

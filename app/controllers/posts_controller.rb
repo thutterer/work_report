@@ -18,19 +18,27 @@ class PostsController < BaseController
     render :template => 'shared/posts/index'
   end
 
+  def show
+    @post = Post.friendly.find(params[:id])
+    render :template => 'shared/posts/show'
+  rescue
+    redirect_to root_path
+  end
+
   def drafts
     @posts = Post.drafted.page(params[:page]).per(50)
     render :template => 'shared/posts/drafts'
   end
 
   def new
-    @post = Post.new
+    @post = Post.new(title: Time.now.strftime("%Y-%m-%d"), workday: Time.now)
     render :template => 'shared/posts/new'
   end
 
   def create
     @post = Post.new(post_params)
     @post.user_id = current_user.id
+    @post.title = params[:post][:workday]
     if @post.save
       redirect_to posts_dashboard_path, notice: "New post published."
     else
@@ -45,6 +53,8 @@ class PostsController < BaseController
 
   def update
     @post.slug = nil
+    #@post.title = @post.workday.strftime("%Y-%m-%d")
+    @post.title = params[:post][:workday]
     if @post.update(post_params)
       redirect_to posts_dashboard_path, notice: "Post successfully edited."
     else
