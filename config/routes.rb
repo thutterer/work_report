@@ -5,8 +5,11 @@ WorkReport::Application.routes.draw do
   get "/contact", to: "pages#contact", as: "contact"
   post "/emailconfirmation", to: "pages#email", as: "email_confirmation"
 
-  get "posts", to: "pages#posts", as: "posts"
-  get "posts/:id", to: "pages#show_post", as: "post"
+  #get "posts", to: "pages#posts", as: "posts"
+  #get "posts/:id", to: "pages#show_post", as: "post"
+  get "posts/drafts", to: "posts#drafts", as: "posts_drafts"
+  get "posts/dashboard", to: "posts#dashboard", as: "posts_dashboard"
+  resources :posts
   devise_for :users
 
   namespace :admin do

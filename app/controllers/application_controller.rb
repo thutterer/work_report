@@ -53,4 +53,13 @@ class ApplicationController < ActionController::Base
   end
   helper_method :require_admin!
 
+  # Only permits users
+  def require_user!
+    authenticate_user!
+
+    if !current_user
+      redirect_to root_path
+    end
+  end
+  helper_method :require_user!
 end
