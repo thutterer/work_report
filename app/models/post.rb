@@ -13,18 +13,21 @@ class Post < ActiveRecord::Base
   # Pagination
   paginates_per 30
 
+  def worked_hours
+    worked_until - worked_from
+  end
   # Relations
   belongs_to :user
 
   # Scopes
   scope :published, lambda {
     where(draft: false)
-    .order("updated_at DESC")
+    .order("workday DESC")
   }
 
   scope :drafted, lambda {
     where(draft: true)
-    .order("updated_at DESC")
+    .order("workday DESC")
   }
 
 end

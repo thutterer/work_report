@@ -31,7 +31,7 @@ class PostsController < BaseController
   end
 
   def new
-    @post = Post.new(title: Time.now.strftime("%Y-%m-%d"), workday: Time.now)
+    @post = Post.new(title: Time.now.strftime("%R"), workday: Time.now, worked_from: Time.now)
     render :template => 'shared/posts/new'
   end
 
@@ -81,6 +81,8 @@ class PostsController < BaseController
     :content_md,
     :draft,
     :workday,
+    :worked_from,
+    :worked_until,
     :updated_at
     )
   end
