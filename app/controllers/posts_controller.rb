@@ -24,6 +24,11 @@ class PostsController < BaseController
       @days = []
       Time.days_in_month(@month, @year).times { |i| @days << "#{@year}-#{format('%02d', @month)}-#{format('%02d', i+1)}"}
 
+      @weeks = Hash.new
+      min_week = @workdays.first.workday.strftime('%U').to_i
+      max_week = @workdays.last.workday.strftime('%U').to_i
+      (min_week..max_week).each { |week| @weeks[week] = [] }
+      @workdays.each { |day| @weeks[day.workday.strftime('%U').to_i] << day }
       respond_to do |format|
         format.html { render :template => 'shared/posts/month' }
         format.js { render :template => 'shared/posts/month' }
@@ -68,7 +73,7 @@ class PostsController < BaseController
     @post.user_id = current_user.id
     @post.title = params[:post][:workday]
     if @post.save
-      redirect_to posts_dashboard_path, notice: "New post published."
+      redirect_to posts_month_path, notice: "New post published."
     else
       flash[:alert] = "Post not published."
       render :template => 'shared/posts/new'
@@ -84,7 +89,7 @@ class PostsController < BaseController
     #@post.title = @post.workday.strftime("%Y-%m-%d")
     @post.title = params[:post][:workday]
     if @post.update(post_params)
-      redirect_to posts_dashboard_path, notice: "Workday successfully edited."
+      redirect_to posts_month_path, notice: "Workday successfully edited."
     else
       flash[:alert] = "The workday was not edited."
       render :template => 'shared/posts/edit'

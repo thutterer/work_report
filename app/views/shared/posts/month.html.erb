@@ -4,13 +4,18 @@
 <hr/>
 
 <%= form_tag("/posts/month", method: "post", id: "monthForm", remote: "true") do %>
-    <div class="hidden-print" style="overflow:hidden; width:100%;">
+    <div class="hidden-print" style="overflow:hidden;">
       <div class="form-group">
         <div class="row">
           <div class="col-md-12">
             <div id="monthpicker">
               <input type="hidden" name="monthYear" value="">
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" align="right">
+            <input type="checkbox" name="toggleView" id="toggleView" checked data-on-text="Month" data-off-text="Weeks" data-on-color="default" data-off-color="default">
           </div>
         </div>
       </div>
@@ -26,11 +31,8 @@
 <% end %>
 
 
-
-
-
 <%= render 'shared/posts/monthTable' %>
 
-<div class="row">
-  <%= secs_to_time @secs_in_month %>
+<div id="divWeeks" style="display: none;">
+  <%= render 'shared/posts/weekTables' %>
 </div>

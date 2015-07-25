@@ -1,0 +1,21 @@
+  <% @weeks.each do |week, days| %>
+<table class="table table-hover table-striped" class="tableWeek">
+    <thead>
+    <tr>
+      <th>Weekday</th>
+      <th>Report</th>
+      <th>Duration</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% days.each do |day| %>
+            <tr>
+              <td><%= link_to day.workday.strftime('%A'), edit_post_path(day.slug) %></td>
+              <td><%= day.content_html.html_safe %></td>
+              <td><%= Time.at(day.worked_seconds).utc.strftime("%H:%M") %></td>
+            </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+

@@ -40,6 +40,9 @@ gem 'mailcatcher'
 gem 'momentjs-rails'
 gem 'bootstrap3-datetimepicker-rails'
 
+# Bootstrap Switch
+gem 'bootstrap-switch-rails'
+
 group :development, :test do
   gem 'byebug', '5.0.0'
   gem 'web-console', '2.1.3'
