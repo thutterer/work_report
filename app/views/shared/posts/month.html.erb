@@ -3,42 +3,33 @@
 <p class="hidden-print"><%= link_to "Back to dashboard", posts_dashboard_path %></p>
 <hr/>
 
+<%= form_tag("/posts/month", method: "post", id: "monthForm", remote: "true") do %>
+    <div class="hidden-print" style="overflow:hidden; width:100%;">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <div id="monthpicker">
+              <input type="hidden" name="monthYear" value="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript">
+          $(function () {
+              $('#monthpicker').datetimepicker({
+                  inline: true,
+                  format: 'MMMM YYYY'
+              });
+          });
+      </script>
+    </div>
+<% end %>
 
-<table class="table table-hover table-striped">
-  <thead>
-  <tr>
-    <th>Date</th>
-    <th>Weekday</th>
-    <th>From</th>
-    <th>Until</th>
-    <th>Duration</th>
-    <th>Note</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @days.each do |day| %>
-    <% if workday = @workdays.where(workday: day).first %>
-      <tr>
-        <td><%= link_to workday.title, edit_post_path(workday.slug) %></td>
-        <td><%= workday.workday.strftime('%A') %></td>
-        <td><%= workday.worked_from %></td>
-        <td><%= workday.worked_until %></td>
-        <td><%= Time.at(workday.worked_seconds).utc.strftime("%H:%M:%S") %></td>
-        <td><%= workday.note %></td>
-      </tr>
-    <% else %>
-      <tr>
-        <td><%= day %></td>
-        <td><%= Date.parse(day).strftime('%A') %></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    <% end %>
-  <% end %>
-  </tbody>
-</table>
+
+
+
+
+<%= render 'shared/posts/monthTable' %>
 
 <div class="row">
   <%= secs_to_time @secs_in_month %>

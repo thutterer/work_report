@@ -17,3 +17,4 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require common
+//= require month

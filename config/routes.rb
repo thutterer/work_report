@@ -10,6 +10,7 @@ WorkReport::Application.routes.draw do
   get "posts/drafts", to: "posts#drafts", as: "posts_drafts"
   get "posts/dashboard", to: "posts#dashboard", as: "posts_dashboard"
   get "posts/month", to: "posts#month", as: "posts_month"
+  post "posts/month", to: "posts#month", as: "posts_month_post"
   resources :posts
   devise_for :users
 

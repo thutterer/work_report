@@ -8,17 +8,29 @@ class PostsController < BaseController
 
 
   def month
-    @month = (params[:month] || Time.now.month).to_i
-    @year = (params[:year] || Time.now.year).to_i
+    if defined? params[:monthYear].split
+      @month = Date::MONTHNAMES.index(params[:monthYear].split.first).to_i
+      @year = params[:monthYear].split.second.to_i
+    else
+      @month = Time.now.month
+      @year = Time.now.year
+    end
     if @month
       @workdays = Post.workdays_by_month(@month, @year).order(:workday)
+
       @secs_in_month = 0
       @workdays.each { |w| @secs_in_month += w.worked_seconds}
+
       @days = []
       Time.days_in_month(@month, @year).times { |i| @days << "#{@year}-#{format('%02d', @month)}-#{format('%02d', i+1)}"}
 
-      render :template => 'shared/posts/month'
+      respond_to do |format|
+        format.html { render :template => 'shared/posts/month' }
+        format.js { render :template => 'shared/posts/month' }
+      end
+
     else
+      #FIXME do i need this if/else still? missing respond_to!
       render :template => 'shared/posts/dashboard'
     end
   end
