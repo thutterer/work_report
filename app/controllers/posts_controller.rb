@@ -25,10 +25,27 @@ class PostsController < BaseController
       Time.days_in_month(@month, @year).times { |i| @days << "#{@year}-#{format('%02d', @month)}-#{format('%02d', i+1)}"}
 
       @weeks = Hash.new
-      min_week = @workdays.first.workday.strftime('%U').to_i
-      max_week = @workdays.last.workday.strftime('%U').to_i
+      min_week = DateTime.parse(@days.first).strftime('%W').to_i
+      max_week = DateTime.parse(@days.last).strftime('%W').to_i
       (min_week..max_week).each { |week| @weeks[week] = [] }
-      @workdays.each { |day| @weeks[day.workday.strftime('%U').to_i] << day }
+
+      extra_days_for_week_view = []
+      day = DateTime.parse(@days.first).beginning_of_week(start_day = :monday)
+      until day.strftime('%F') == @days.first
+        extra_days_for_week_view << day.strftime('%F')
+        day = day.days_since 1
+      end
+      day = DateTime.parse(@days.last).end_of_week(start_day = :monday)
+      until day.strftime('%F') == @days.last
+        extra_days_for_week_view << day.strftime('%F')
+        day = day.days_ago 1
+      end
+
+      (@days + extra_days_for_week_view).sort.each do |day|
+        days_week = DateTime.parse(day).strftime('%W').to_i
+        @weeks[days_week] << day if @weeks.keys.include? days_week
+      end
+
       respond_to do |format|
         format.html { render :template => 'shared/posts/month' }
         format.js { render :template => 'shared/posts/month' }

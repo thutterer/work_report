@@ -2,6 +2,7 @@
 <table class="table table-hover table-striped" class="tableWeek">
     <thead>
     <tr>
+      <th>Day</th>
       <th>Weekday</th>
       <th>Report</th>
       <th>Duration</th>
@@ -9,11 +10,21 @@
     </thead>
     <tbody>
       <% days.each do |day| %>
-            <tr>
-              <td><%= link_to day.workday.strftime('%A'), edit_post_path(day.slug) %></td>
-              <td><%= day.content_html.html_safe %></td>
-              <td><%= Time.at(day.worked_seconds).utc.strftime("%H:%M") %></td>
-            </tr>
+        <% if (workday = @workdays.where(workday: day).first) %>
+          <tr>
+            <td><%= link_to workday.workday, edit_post_path(workday.slug) %></td>
+            <td><%= link_to workday.workday.strftime('%A'), edit_post_path(workday.slug) %></td>
+            <td><%= workday.content_html.html_safe %></td>
+            <td><%= Time.at(workday.worked_seconds).utc.strftime("%H:%M") %></td>
+          </tr>
+        <% else %>
+          <tr>
+            <td><%= Date.parse(day).strftime('%F') %></td>
+            <td><%= Date.parse(day).strftime('%A') %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
   </table>
