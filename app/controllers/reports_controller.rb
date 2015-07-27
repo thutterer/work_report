@@ -47,42 +47,42 @@ class ReportsController < BaseController
       end
 
       respond_to do |format|
-        format.html { render :template => 'shared/posts/month' }
-        format.js { render :template => 'shared/posts/month' }
+        format.html { render :template => 'shared/reports/month' }
+        format.js { render :template => 'shared/reports/month' }
       end
 
     else
       #FIXME do i need this if/else still? missing respond_to!
-      render :template => 'shared/posts/dashboard'
+      render :template => 'shared/reports/dashboard'
     end
   end
 
   def dashboard
     @published_post_count = Report.published.count
     @draft_post_count = Report.drafted.count
-    render :template => 'shared/posts/dashboard'
+    render :template => 'shared/reports/dashboard'
   end
 
   def index
     @posts = Report.published.page(params[:page]).per(50)
-    render :template => 'shared/posts/index'
+    render :template => 'shared/reports/index'
   end
 
   def show
     @post = Report.friendly.find(params[:id])
-    render :template => 'shared/posts/show'
+    render :template => 'shared/reports/show'
   rescue
     redirect_to root_path
   end
 
   def drafts
     @posts = Report.drafted.page(params[:page]).per(50)
-    render :template => 'shared/posts/drafts'
+    render :template => 'shared/reports/drafts'
   end
 
   def new
     @post = Report.new(title: Time.now.strftime("%R"), workday: Time.now, worked_from: Time.now)
-    render :template => 'shared/posts/new'
+    render :template => 'shared/reports/new'
   end
 
   def create
@@ -90,15 +90,15 @@ class ReportsController < BaseController
     @post.user_id = current_user.id
     @post.title = params[:report][:workday]
     if @post.save
-      redirect_to reports_month_path, notice: "New post published."
+      redirect_to reports_month_path, notice: "New report published."
     else
       flash[:alert] = "Report not published."
-      render :template => 'shared/posts/new'
+      render :template => 'shared/reports/new'
     end
   end
 
   def edit
-    render :template => 'shared/posts/edit'
+    render :template => 'shared/reports/edit'
   end
 
   def update
@@ -109,7 +109,7 @@ class ReportsController < BaseController
       redirect_to reports_month_path, notice: "Report successfully edited."
     else
       flash[:alert] = "Report was not edited."
-      render :template => 'shared/posts/edit'
+      render :template => 'shared/reports/edit'
     end
   end
 

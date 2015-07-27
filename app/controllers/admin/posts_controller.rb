@@ -10,22 +10,22 @@ class Admin::PostsController < Admin::BaseController
   def dashboard
     @published_post_count = Report.published.count
     @draft_post_count = Report.drafted.count
-    render :template => 'shared/posts/dashboard'
+    render :template => 'shared/reports/dashboard'
   end
 
   def index
     @posts = Report.published.page(params[:page]).per(50)
-    render :template => 'shared/posts/index'
+    render :template => 'shared/reports/index'
   end
 
   def drafts
     @posts = Report.drafted.page(params[:page]).per(50)
-    render :template => 'shared/posts/drafts'
+    render :template => 'shared/reports/drafts'
   end
 
   def new
     @post = Report.new
-    render :template => 'shared/posts/new'
+    render :template => 'shared/reports/new'
   end
 
   def create
@@ -35,12 +35,12 @@ class Admin::PostsController < Admin::BaseController
       redirect_to admin_reports_dashboard_path, notice: "New post published."
     else
       flash[:alert] = "Report not published."
-      render :template => 'shared/posts/new'
+      render :template => 'shared/reports/new'
     end
   end
 
   def edit
-    render :template => 'shared/posts/edit'
+    render :template => 'shared/reports/edit'
   end
 
   def update
@@ -49,7 +49,7 @@ class Admin::PostsController < Admin::BaseController
       redirect_to admin_reports_dashboard_path, notice: "Report successfully edited."
     else
       flash[:alert] = "The post was not edited."
-      render :template => 'shared/posts/edit'
+      render :template => 'shared/reports/edit'
     end
   end
 
