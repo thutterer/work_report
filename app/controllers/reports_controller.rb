@@ -7,7 +7,7 @@ class ReportsController < BaseController
   ]
 
 
-  def month
+  def index
     if defined? params[:monthYear].split
       @month = Date::MONTHNAMES.index(params[:monthYear].split.first).to_i
       @year = params[:monthYear].split.second.to_i
@@ -47,8 +47,8 @@ class ReportsController < BaseController
       end
 
       respond_to do |format|
-        format.html { render :template => 'shared/reports/month' }
-        format.js { render :template => 'shared/reports/month' }
+        format.html { render :template => 'shared/reports/index' }
+        format.js { render :template => 'shared/reports/index' }
       end
 
     else
@@ -61,11 +61,6 @@ class ReportsController < BaseController
     @published_report_count = Report.published.count
     @draft_report_count = Report.drafted.count
     render :template => 'shared/reports/dashboard'
-  end
-
-  def index
-    @reports = Report.published.page(params[:page]).per(50)
-    render :template => 'shared/reports/index'
   end
 
   def show
@@ -91,7 +86,7 @@ class ReportsController < BaseController
     @report.user_id = current_user.id
     @report.title = params[:report][:workday]
     if @report.save
-      redirect_to reports_month_path, notice: "New report published."
+      redirect_to reports_path, notice: "New report published."
     else
       flash[:alert] = "Report not published."
       render :template => 'shared/reports/new'
@@ -107,7 +102,7 @@ class ReportsController < BaseController
     #@report.title = @report.workday.strftime("%Y-%m-%d")
     @report.title = params[:report][:workday]
     if @report.update(post_params)
-      redirect_to reports_month_path, notice: "Report successfully edited."
+      redirect_to reports_path, notice: "Report successfully edited."
     else
       flash[:alert] = "Report was not edited."
       render :template => 'shared/reports/edit'

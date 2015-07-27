@@ -1,5 +1,5 @@
 WorkReport::Application.routes.draw do
-  root "pages#home"
+  root "reports#index"
   get "home", to: "pages#home", as: "home"
   get "inside", to: "pages#inside", as: "inside"
   get "/contact", to: "pages#contact", as: "contact"
@@ -8,9 +8,9 @@ WorkReport::Application.routes.draw do
   #get "reports", to: "pages#reports", as: "reports"
   #get "reports/:id", to: "pages#show_report", as: "report"
   get "reports/drafts", to: "reports#drafts", as: "reports_drafts"
+  # TODO get rid off dashboard route
   get "reports/dashboard", to: "reports#dashboard", as: "reports_dashboard"
-  get "reports/month", to: "reports#month", as: "reports_month"
-  post "reports/month", to: "reports#month", as: "reports_month_post"
+  post "reports/index", to: "reports#index", as: "reports_index_post"
   resources :reports
   devise_for :users
 

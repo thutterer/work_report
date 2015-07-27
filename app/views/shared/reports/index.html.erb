@@ -1,23 +1,37 @@
-<% title("Published workreports") %>
-<h3 class="page-title">Reports <small>Published</small></h3>
-<p><%= link_to "Back to dashboard", reports_dashboard_path %></p>
+<% title("#{@year}-#{@month}") %>
+<h3 class="page-title">Reports</h3>
 <hr/>
 
-<p class="pagination-summary"><%= page_entries_info @reports %></p>
-<%= paginate @reports %>
+<%= form_tag("/reports/index", method: "post", id: "monthForm", remote: "true") do %>
+    <div class="hidden-print" style="overflow:hidden;">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <div id="monthpicker">
+              <input type="hidden" name="monthYear" value="">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" align="right">
+            <input type="checkbox" name="toggleView" id="toggleView" checked data-on-text="Month" data-off-text="Weeks" data-on-color="default" data-off-color="default">
+          </div>
+        </div>
+      </div>
+      <script type="text/javascript">
+          $(function () {
+              $('#monthpicker').datetimepicker({
+                  inline: true,
+                  format: 'MMMM YYYY'
+              });
+          });
+      </script>
+    </div>
+<% end %>
 
-<hr/>
 
-<ul class="fa-ul">
-  <% @reports.each do |report| %>
-  <li class="margin-md-down">
-    <i class="fa fa-arrow-circle-o-right small"></i>&nbsp;&nbsp;
-    <%= link_to report.title, edit_report_path(report.slug) %> <br/>
-    <small class="x-small-text">about <%= time_ago_in_words(report.updated_at) %> ago</small>
-  </li>
-  <% end %>
-</ul>
+<%= render 'shared/reports/monthTable' %>
 
-<hr/>
-
-<%= paginate @reports %>
+<div id="divWeeks" style="display: none;">
+  <%= render 'shared/reports/weekTables' %>
+</div>
