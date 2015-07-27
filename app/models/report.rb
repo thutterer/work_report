@@ -6,6 +6,7 @@ class Report < ActiveRecord::Base
   # Callbacks
   before_save { MarkdownWriter.update_html(self) }
   before_save { |report| report.title = report.workday.strftime('%F')}
+  before_save { |report| report.break_duration = "00:00" unless report.break_duration}
 
   # Validations
   validates :title, presence: true, length: { maximum: 100 }, uniqueness: true
