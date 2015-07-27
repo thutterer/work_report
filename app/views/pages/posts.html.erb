@@ -5,7 +5,7 @@
 
 <div class="title-box">
   <p>
-    <%= link_to "#{post.title}", post_path(post.slug) %> <br/>
+    <%= link_to "#{post.title}", report_path(post.slug) %> <br/>
     <span><small><em><%= time_ago_in_words(post.updated_at) %> ago</em></small></span>
   </p>
 
@@ -17,4 +17,4 @@
   <%= paginate @posts %>
 </div>
 
-<div class="col-sm-4"><%= link_to "New post", new_admin_post_path %></div>
+<div class="col-sm-4"><%= link_to "New post", new_admin_report_path %></div>

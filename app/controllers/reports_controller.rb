@@ -1,4 +1,4 @@
-class PostsController < BaseController
+class ReportsController < BaseController
 
   before_action :set_post, only: [
     :edit,
@@ -88,9 +88,9 @@ class PostsController < BaseController
   def create
     @post = Report.new(post_params)
     @post.user_id = current_user.id
-    @post.title = params[:post][:workday]
+    @post.title = params[:report][:workday]
     if @post.save
-      redirect_to posts_month_path, notice: "New post published."
+      redirect_to reports_month_path, notice: "New post published."
     else
       flash[:alert] = "Report not published."
       render :template => 'shared/posts/new'
@@ -104,18 +104,18 @@ class PostsController < BaseController
   def update
     @post.slug = nil
     #@post.title = @post.workday.strftime("%Y-%m-%d")
-    @post.title = params[:post][:workday]
+    @post.title = params[:report][:workday]
     if @post.update(post_params)
-      redirect_to posts_month_path, notice: "Workday successfully edited."
+      redirect_to reports_month_path, notice: "Report successfully edited."
     else
-      flash[:alert] = "The workday was not edited."
+      flash[:alert] = "Report was not edited."
       render :template => 'shared/posts/edit'
     end
   end
 
   def destroy
     @post.destroy
-    redirect_to posts_path, notice: "The workday has been deleted."
+    redirect_to reports_path, notice: "Report deleted."
   end
 
 
@@ -126,7 +126,7 @@ class PostsController < BaseController
   end
 
   def post_params
-    params.require(:post).permit(
+    params.require(:report).permit(
     :title,
     :note,
     :content_md,

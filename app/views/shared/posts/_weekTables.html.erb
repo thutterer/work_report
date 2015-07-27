@@ -12,8 +12,8 @@
       <% days.each do |day| %>
         <% if (workday = @workdays.where(workday: day).first) %>
           <tr>
-            <td><%= link_to workday.workday, edit_post_path(workday.slug) %></td>
-            <td><%= link_to workday.workday.strftime('%A'), edit_post_path(workday.slug) %></td>
+            <td><%= link_to workday.workday, edit_report_path(workday.slug) %></td>
+            <td><%= link_to workday.workday.strftime('%A'), edit_report_path(workday.slug) %></td>
             <td><%= workday.content_html.html_safe %></td>
             <td><%= Time.at(workday.worked_seconds).utc.strftime("%H:%M") %></td>
           </tr>

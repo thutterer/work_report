@@ -1,9 +1,9 @@
 <% title("Workreport #{@month}/#{@year}") %>
 <h3 class="page-title">Workdays <small>Published</small></h3>
-<p class="hidden-print"><%= link_to "Back to dashboard", posts_dashboard_path %></p>
+<p class="hidden-print"><%= link_to "Back to dashboard", reports_dashboard_path %></p>
 <hr/>
 
-<%= form_tag("/posts/month", method: "post", id: "monthForm", remote: "true") do %>
+<%= form_tag("/reports/month", method: "post", id: "monthForm", remote: "true") do %>
     <div class="hidden-print" style="overflow:hidden;">
       <div class="form-group">
         <div class="row">

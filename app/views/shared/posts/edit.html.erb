@@ -1,10 +1,10 @@
 <% title("Edit #{@post.title}") %>
 <h3 class="page-title">Edit workday <small><%= @post.title %> by <%= @post.user.username %></small></h3>
 <p>
-  <%= link_to "Back to dashboard", posts_dashboard_path %>
+  <%= link_to "Back to dashboard", reports_dashboard_path %>
 </p>
 <hr/>
 
 <%= render 'shared/posts/form' %>
 <hr/>
-<%= link_to "<i class='fa fa-minus-square'></i> Delete post".html_safe, post_path(@post), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-small btn-danger" %>
+<%= link_to "<i class='fa fa-minus-square'></i> Delete report".html_safe, report_path(@post), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-small btn-danger" %>
