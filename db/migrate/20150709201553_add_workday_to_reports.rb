@@ -1,5 +1,5 @@
 class AddWorkdayToPosts < ActiveRecord::Migration
   def change
-    add_column :posts, :workday, :date
+    add_column :reports, :workday, :date
   end
 end
