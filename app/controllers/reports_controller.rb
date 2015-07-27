@@ -126,6 +126,7 @@ class ReportsController < BaseController
     :draft,
     :workday,
     :worked_from,
+    :break_duration,
     :worked_until,
     :updated_at
     )

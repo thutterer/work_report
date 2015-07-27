@@ -32,7 +32,7 @@
   <div class='input-group date' id='worked_from_picker'>
     <input type='text' class="form-control" name='report[worked_from]' value='<%= if defined? @report.worked_from.strftime then @report.worked_from.strftime("%R") else '' end %>>' />
 <span class="input-group-addon">
-    <span class="glyphicon glyphicon-calendar"></span>
+    <span class="glyphicon glyphicon-time"></span>
 </span>
   </div>
   <script type="text/javascript">
@@ -45,11 +45,28 @@
 </div>
 
 <div class="form-group">
+  <%= f.label :break_duration, "Break duration" %>
+  <div class='input-group date' id='break_duration_picker'>
+    <input type='text' class="form-control" name='report[break_duration]' value='<%= if defined? @report.break_duration.strftime then @reportbreak_duration.strftime("%R") else '' end %>>' />
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-cutlery"></span>
+    </span>
+  </div>
+  <script type="text/javascript">
+      $(function () {
+          $('#break_duration_picker').datetimepicker({
+              format: 'HH:mm'
+          });
+      });
+  </script>
+</div>
+
+    <div class="form-group">
   <%= f.label :worked_until, "Work done at" %>
   <div class='input-group date' id='worked_until_picker'>
     <input type='text' class="form-control" name='report[worked_until]' value='<%= if defined? @report.worked_until.strftime then @report.worked_until.strftime("%R") else '' end %>>' />
 <span class="input-group-addon">
-    <span class="glyphicon glyphicon-calendar"></span>
+    <span class="glyphicon glyphicon-time"></span>
 </span>
   </div>
   <script type="text/javascript">
@@ -88,8 +105,8 @@
 <div class="row">
   <div class="col-xs-12 padded">
     <button class='btn btn-primary'>
-      <i class='fa fa-plus-square'></i> Publish
-    </button> - <%= link_to "Cancel", reports_dashboard_path %>
+      <span class="glyphicon glyphicon-ok"></span> Save
+    </button> - <%= link_to "Cancel", reports_path %>
   </div>
 </div>
 

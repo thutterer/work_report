@@ -3,7 +3,7 @@ class Report < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
 
-  # Markdown
+  # Callbacks
   before_save { MarkdownWriter.update_html(self) }
   before_save { |report| report.title = report.workday.strftime('%F')}
 
@@ -19,15 +19,16 @@ class Report < ActiveRecord::Base
   # Pagination
   paginates_per 30
 
-  def worked_seconds
-    worked_until - worked_from
-  end
   # Relations
   belongs_to :user
 
   def self.by_month(month, year = Time.now.year)
     month = format('%02d', month)
     where(workday: "#{year}-#{month}-01".."#{year}-#{month}-#{Time.days_in_month(month.to_i, year)}")
+  end
+
+  def worked_seconds
+    worked_until - worked_from - break_duration.seconds_since_midnight
   end
 
   # Scopes
