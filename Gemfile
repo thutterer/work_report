@@ -33,9 +33,6 @@ gem 'bootstrap-sass', '3.3.5.1'
 gem 'execjs'
 gem 'therubyracer'
 
-# MailCatcher as simple SMTP server
-gem 'mailcatcher'
-
 # Bootstrap 3 DateTimePicker
 gem 'momentjs-rails'
 gem 'bootstrap3-datetimepicker-rails'
@@ -46,6 +43,8 @@ gem 'bootstrap-switch-rails'
 group :development, :test do
   gem 'byebug', '5.0.0'
   gem 'web-console', '2.1.3'
+  # MailCatcher as simple SMTP server
+  gem 'mailcatcher'
 
   # Figaro: https://github.com/laserlemon/figaro
   gem 'figaro', '1.1.1'
