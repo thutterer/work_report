@@ -11,13 +11,13 @@
   </thead>
   <tbody>
   <% @days.each do |day| %>
-      <% if report = @reports.where(workday: day).first %>
+      <% if report = current_user.reports.where(workday: day).first %>
           <tr>
             <td><%= link_to report.title, edit_report_path(report.id) %></td>
             <td><%= report.workday.strftime('%A') %></td>
             <td><%= report.worked_from %></td>
             <td><%= report.worked_until %></td>
-            <td><%= Time.at(report.worked_seconds).utc.strftime("%H:%M:%S") unless report.worked_seconds == 0 %></td>
+            <td><%= Time.at(report.worked_seconds).utc.strftime("%H:%M") unless report.worked_seconds == 0 %></td>
             <td><%= report.note %></td>
           </tr>
       <% else %>
