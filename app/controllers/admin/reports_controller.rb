@@ -1,4 +1,4 @@
-class Admin::PostsController < Admin::BaseController
+class Admin::ReportsController < Admin::BaseController
 
   before_action :set_post, only: [
     :edit,
@@ -32,7 +32,7 @@ class Admin::PostsController < Admin::BaseController
     @post = Report.new(post_params)
     @post.user_id = current_user.id
     if @post.save
-      redirect_to admin_reports_dashboard_path, notice: "New post published."
+      redirect_to admin_reports_dashboard_path, notice: "New report published."
     else
       flash[:alert] = "Report not published."
       render :template => 'shared/reports/new'
@@ -48,14 +48,14 @@ class Admin::PostsController < Admin::BaseController
     if @post.update(post_params)
       redirect_to admin_reports_dashboard_path, notice: "Report successfully edited."
     else
-      flash[:alert] = "The post was not edited."
+      flash[:alert] = "Report was not edited."
       render :template => 'shared/reports/edit'
     end
   end
 
   def destroy
     @post.destroy
-    redirect_to admin_reports_path, notice: "The post has been deleted."
+    redirect_to admin_reports_path, notice: "Report deleted."
   end
 
 
