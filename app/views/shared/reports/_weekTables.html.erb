@@ -12,8 +12,8 @@
       <% days.each do |day| %>
         <% if (report = @reports.where(workday: day).first) %>
           <tr>
-            <td><%= link_to report.workday.strftime('%F'), edit_report_path(report.slug) %></td>
-            <td><%= link_to report.workday.strftime('%A'), edit_report_path(report.slug) %></td>
+            <td><%= link_to report.workday.strftime('%F'), edit_report_path(report.id) %></td>
+            <td><%= link_to report.workday.strftime('%A'), edit_report_path(report.id) %></td>
             <td><%= report.content_html.html_safe %></td>
             <td><%= Time.at(report.worked_seconds).utc.strftime("%H:%M") %></td>
           </tr>

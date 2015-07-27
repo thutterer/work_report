@@ -4,12 +4,13 @@ class Report < ActiveRecord::Base
   friendly_id :title, use: :slugged
 
   # Callbacks
+  before_validation { |report| report.title = report.workday.strftime('%F')}
   before_save { MarkdownWriter.update_html(self) }
-  before_save { |report| report.title = report.workday.strftime('%F')}
   before_save { |report| report.break_duration = "00:00" unless report.break_duration}
 
   # Validations
-  validates :title, presence: true, uniqueness: true
+  validates :title, presence: true
+  validates :title, uniqueness: { scope: [:user] }
 
   ### not needed anymore but as a reminder how to write custom validations like this :)
   # validates :worked_until, presence: true, unless: :is_a_draft?

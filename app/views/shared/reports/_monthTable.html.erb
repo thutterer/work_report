@@ -13,7 +13,7 @@
   <% @days.each do |day| %>
       <% if report = @reports.where(workday: day).first %>
           <tr>
-            <td><%= link_to report.title, edit_report_path(report.slug) %></td>
+            <td><%= link_to report.title, edit_report_path(report.id) %></td>
             <td><%= report.workday.strftime('%A') %></td>
             <td><%= report.worked_from %></td>
             <td><%= report.worked_until %></td>
