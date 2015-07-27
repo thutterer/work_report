@@ -1,5 +1,5 @@
 class AddNoteToPosts < ActiveRecord::Migration
   def change
-    add_column :posts, :note, :string
+    add_column :reports, :note, :string
   end
 end

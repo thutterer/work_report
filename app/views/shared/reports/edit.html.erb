@@ -1,0 +1,10 @@
+<% title("Edit #{@report.title}") %>
+<h3 class="page-title">Edit report <small><%= @report.title %> by <%= @report.user.username %></small></h3>
+<p>
+  <%= link_to "Back to dashboard", reports_dashboard_path %>
+</p>
+<hr/>
+
+<%= render 'shared/reports/form' %>
+<hr/>
+<%= link_to "<i class='fa fa-minus-square'></i> Delete report".html_safe, report_path(@report), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-small btn-danger" %>

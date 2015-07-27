@@ -1,4 +1,4 @@
-class PostsController < BaseController
+class ReportsController < BaseController
 
   before_action :set_post, only: [
     :edit,
@@ -16,10 +16,10 @@ class PostsController < BaseController
       @year = Time.now.year
     end
     if @month
-      @workdays = Post.workdays_by_month(@month, @year).order(:workday)
+      @reports = Report.by_month(@month, @year).order(:workday)
 
       @secs_in_month = 0
-      @workdays.each { |w| @secs_in_month += w.worked_seconds}
+      @reports.each { |w| @secs_in_month += w.worked_seconds}
 
       @days = []
       Time.days_in_month(@month, @year).times { |i| @days << "#{@year}-#{format('%02d', @month)}-#{format('%02d', i+1)}"}
@@ -47,86 +47,86 @@ class PostsController < BaseController
       end
 
       respond_to do |format|
-        format.html { render :template => 'shared/posts/month' }
-        format.js { render :template => 'shared/posts/month' }
+        format.html { render :template => 'shared/reports/month' }
+        format.js { render :template => 'shared/reports/month' }
       end
 
     else
       #FIXME do i need this if/else still? missing respond_to!
-      render :template => 'shared/posts/dashboard'
+      render :template => 'shared/reports/dashboard'
     end
   end
 
   def dashboard
-    @published_post_count = Post.published.count
-    @draft_post_count = Post.drafted.count
-    render :template => 'shared/posts/dashboard'
+    @published_report_count = Report.published.count
+    @draft_report_count = Report.drafted.count
+    render :template => 'shared/reports/dashboard'
   end
 
   def index
-    @posts = Post.published.page(params[:page]).per(50)
-    render :template => 'shared/posts/index'
+    @reports = Report.published.page(params[:page]).per(50)
+    render :template => 'shared/reports/index'
   end
 
   def show
-    @post = Post.friendly.find(params[:id])
-    render :template => 'shared/posts/show'
+    @report = Report.friendly.find(params[:id])
+    render :template => 'shared/reports/show'
   rescue
     redirect_to root_path
   end
 
   def drafts
-    @posts = Post.drafted.page(params[:page]).per(50)
-    render :template => 'shared/posts/drafts'
+    @reports = Report.drafted.page(params[:page]).per(50)
+    render :template => 'shared/reports/drafts'
   end
 
   def new
-    @post = Post.new(title: Time.now.strftime("%R"), workday: Time.now, worked_from: Time.now)
-    render :template => 'shared/posts/new'
+    @report = Report.new(title: Time.now.strftime("%R"), workday: Time.now, worked_from: Time.now)
+    render :template => 'shared/reports/new'
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.user_id = current_user.id
-    @post.title = params[:post][:workday]
-    if @post.save
-      redirect_to posts_month_path, notice: "New post published."
+    @report = Report.new(post_params)
+    @report.user_id = current_user.id
+    @report.title = params[:report][:workday]
+    if @report.save
+      redirect_to reports_month_path, notice: "New report published."
     else
-      flash[:alert] = "Post not published."
-      render :template => 'shared/posts/new'
+      flash[:alert] = "Report not published."
+      render :template => 'shared/reports/new'
     end
   end
 
   def edit
-    render :template => 'shared/posts/edit'
+    render :template => 'shared/reports/edit'
   end
 
   def update
-    @post.slug = nil
-    #@post.title = @post.workday.strftime("%Y-%m-%d")
-    @post.title = params[:post][:workday]
-    if @post.update(post_params)
-      redirect_to posts_month_path, notice: "Workday successfully edited."
+    @report.slug = nil
+    #@report.title = @report.workday.strftime("%Y-%m-%d")
+    @report.title = params[:report][:workday]
+    if @report.update(post_params)
+      redirect_to reports_month_path, notice: "Report successfully edited."
     else
-      flash[:alert] = "The workday was not edited."
-      render :template => 'shared/posts/edit'
+      flash[:alert] = "Report was not edited."
+      render :template => 'shared/reports/edit'
     end
   end
 
   def destroy
-    @post.destroy
-    redirect_to posts_path, notice: "The workday has been deleted."
+    @report.destroy
+    redirect_to reports_path, notice: "Report deleted."
   end
 
 
   private
 
   def set_post
-    @post = Post.friendly.find(params[:id])
+    @report = Report.friendly.find(params[:id])
   end
 
   def post_params
-    params.require(:post).permit(
+    params.require(:report).permit(
     :title,
     :note,
     :content_md,

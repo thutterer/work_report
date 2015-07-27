@@ -1,9 +1,0 @@
-<% title("Workreports Dashboard") %>
-<h3 class="page-title">Workreports <small>Dashboard</small></h3>
-<p><%= link_to "Back to Root", root_path %></p>
-<hr/>
-<div class="row">
-  <div class="col-sm-12">Published: <%= link_to "#{pluralize(@published_post_count, 'workreport')}", posts_path %></div>
-  <div class="col-sm-12">Drafts: <%= link_to "#{pluralize(@draft_post_count, 'draft')}", posts_drafts_path %></div>
-  <div class="col-sm-12"><%= link_to "New workreport", new_post_path %></div>
-</div>

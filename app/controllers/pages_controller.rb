@@ -9,12 +9,12 @@ class PagesController < ApplicationController
   def inside
   end
   
-def posts
-    @posts = Post.published.page(params[:page]).per(10)
+def reports
+    @reports = Report.published.page(params[:page]).per(10)
   end
 
-  def show_post
-    @post = Post.friendly.find(params[:id])
+  def show_report
+    @report = Report.friendly.find(params[:id])
   rescue
     redirect_to root_path
   end

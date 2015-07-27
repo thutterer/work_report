@@ -1,0 +1,23 @@
+<% title("Published workreports") %>
+<h3 class="page-title">Reports <small>Published</small></h3>
+<p><%= link_to "Back to dashboard", reports_dashboard_path %></p>
+<hr/>
+
+<p class="pagination-summary"><%= page_entries_info @reports %></p>
+<%= paginate @reports %>
+
+<hr/>
+
+<ul class="fa-ul">
+  <% @reports.each do |report| %>
+  <li class="margin-md-down">
+    <i class="fa fa-arrow-circle-o-right small"></i>&nbsp;&nbsp;
+    <%= link_to report.title, edit_report_path(report.slug) %> <br/>
+    <small class="x-small-text">about <%= time_ago_in_words(report.updated_at) %> ago</small>
+  </li>
+  <% end %>
+</ul>
+
+<hr/>
+
+<%= paginate @reports %>

@@ -11,14 +11,14 @@
   </thead>
   <tbody>
   <% @days.each do |day| %>
-      <% if workday = @workdays.where(workday: day).first %>
+      <% if report = @reports.where(workday: day).first %>
           <tr>
-            <td><%= link_to workday.title, edit_post_path(workday.slug) %></td>
-            <td><%= workday.workday.strftime('%A') %></td>
-            <td><%= workday.worked_from %></td>
-            <td><%= workday.worked_until %></td>
-            <td><%= Time.at(workday.worked_seconds).utc.strftime("%H:%M:%S") %></td>
-            <td><%= workday.note %></td>
+            <td><%= link_to report.title, edit_report_path(report.slug) %></td>
+            <td><%= report.workday.strftime('%A') %></td>
+            <td><%= report.worked_from %></td>
+            <td><%= report.worked_until %></td>
+            <td><%= Time.at(report.worked_seconds).utc.strftime("%H:%M:%S") %></td>
+            <td><%= report.note %></td>
           </tr>
       <% else %>
           <tr>
