@@ -1,4 +1,4 @@
-class Post < ActiveRecord::Base
+class Report < ActiveRecord::Base
   # Use friendly_id
   extend FriendlyId
   friendly_id :title, use: :slugged

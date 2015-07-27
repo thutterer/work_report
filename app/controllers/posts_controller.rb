@@ -16,7 +16,7 @@ class PostsController < BaseController
       @year = Time.now.year
     end
     if @month
-      @workdays = Post.workdays_by_month(@month, @year).order(:workday)
+      @workdays = Report.workdays_by_month(@month, @year).order(:workday)
 
       @secs_in_month = 0
       @workdays.each { |w| @secs_in_month += w.worked_seconds}
@@ -58,41 +58,41 @@ class PostsController < BaseController
   end
 
   def dashboard
-    @published_post_count = Post.published.count
-    @draft_post_count = Post.drafted.count
+    @published_post_count = Report.published.count
+    @draft_post_count = Report.drafted.count
     render :template => 'shared/posts/dashboard'
   end
 
   def index
-    @posts = Post.published.page(params[:page]).per(50)
+    @posts = Report.published.page(params[:page]).per(50)
     render :template => 'shared/posts/index'
   end
 
   def show
-    @post = Post.friendly.find(params[:id])
+    @post = Report.friendly.find(params[:id])
     render :template => 'shared/posts/show'
   rescue
     redirect_to root_path
   end
 
   def drafts
-    @posts = Post.drafted.page(params[:page]).per(50)
+    @posts = Report.drafted.page(params[:page]).per(50)
     render :template => 'shared/posts/drafts'
   end
 
   def new
-    @post = Post.new(title: Time.now.strftime("%R"), workday: Time.now, worked_from: Time.now)
+    @post = Report.new(title: Time.now.strftime("%R"), workday: Time.now, worked_from: Time.now)
     render :template => 'shared/posts/new'
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = Report.new(post_params)
     @post.user_id = current_user.id
     @post.title = params[:post][:workday]
     if @post.save
       redirect_to posts_month_path, notice: "New post published."
     else
-      flash[:alert] = "Post not published."
+      flash[:alert] = "Report not published."
       render :template => 'shared/posts/new'
     end
   end
@@ -122,7 +122,7 @@ class PostsController < BaseController
   private
 
   def set_post
-    @post = Post.friendly.find(params[:id])
+    @post = Report.friendly.find(params[:id])
   end
 
   def post_params

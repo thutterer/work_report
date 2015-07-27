@@ -8,33 +8,33 @@ class Admin::PostsController < Admin::BaseController
 
 
   def dashboard
-    @published_post_count = Post.published.count
-    @draft_post_count = Post.drafted.count
+    @published_post_count = Report.published.count
+    @draft_post_count = Report.drafted.count
     render :template => 'shared/posts/dashboard'
   end
 
   def index
-    @posts = Post.published.page(params[:page]).per(50)
+    @posts = Report.published.page(params[:page]).per(50)
     render :template => 'shared/posts/index'
   end
 
   def drafts
-    @posts = Post.drafted.page(params[:page]).per(50)
+    @posts = Report.drafted.page(params[:page]).per(50)
     render :template => 'shared/posts/drafts'
   end
 
   def new
-    @post = Post.new
+    @post = Report.new
     render :template => 'shared/posts/new'
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = Report.new(post_params)
     @post.user_id = current_user.id
     if @post.save
       redirect_to admin_posts_dashboard_path, notice: "New post published."
     else
-      flash[:alert] = "Post not published."
+      flash[:alert] = "Report not published."
       render :template => 'shared/posts/new'
     end
   end
@@ -46,7 +46,7 @@ class Admin::PostsController < Admin::BaseController
   def update
     @post.slug = nil
     if @post.update(post_params)
-      redirect_to admin_posts_dashboard_path, notice: "Post successfully edited."
+      redirect_to admin_posts_dashboard_path, notice: "Report successfully edited."
     else
       flash[:alert] = "The post was not edited."
       render :template => 'shared/posts/edit'
@@ -62,7 +62,7 @@ class Admin::PostsController < Admin::BaseController
   private
 
   def set_post
-    @post = Post.friendly.find(params[:id])
+    @post = Report.friendly.find(params[:id])
   end
 
   def post_params
