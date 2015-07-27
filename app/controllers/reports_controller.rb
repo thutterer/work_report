@@ -84,7 +84,6 @@ class ReportsController < BaseController
   def create
     @report = Report.new(post_params)
     @report.user_id = current_user.id
-    @report.title = params[:report][:workday]
     if @report.save
       redirect_to reports_path, notice: "New report published."
     else
@@ -99,8 +98,6 @@ class ReportsController < BaseController
 
   def update
     @report.slug = nil
-    #@report.title = @report.workday.strftime("%Y-%m-%d")
-    @report.title = params[:report][:workday]
     if @report.update(post_params)
       redirect_to reports_path, notice: "Report successfully edited."
     else
