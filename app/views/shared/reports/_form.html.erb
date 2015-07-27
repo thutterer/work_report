@@ -1,19 +1,19 @@
-<% if @post.errors.any? %>
+<% if @report.errors.any? %>
 <ul>
-  <% @post.errors.full_messages.each do |msg| %>
+  <% @report.errors.full_messages.each do |msg| %>
   <li><%= msg %></li>
   <% end %>
 </ul>
 <% end %>
 
-<%= form_for [@post], role: "form" do |f| %>
+<%= form_for [@report], role: "form" do |f| %>
 
 <%= f.hidden_field :title, :autofocus => true, class: "form-control monospaced-control", placeholder: "Title (also used for URL slug)..." %>
 
 <div class="form-group">
   <%= f.label :workday, "Day" %>
   <div class='input-group date' id='workday_picker'>
-    <input type='text' class="form-control" name='report[workday]' value='<%= if defined? @post.workday.strftime then @post.workday.strftime("%Y-%m-%d") else '' end %>>' />
+    <input type='text' class="form-control" name='report[workday]' value='<%= if defined? @report.workday.strftime then @report.workday.strftime("%Y-%m-%d") else '' end %>>' />
     <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>
     </span>
@@ -30,7 +30,7 @@
 <div class="form-group">
   <%= f.label :worked_from, "Work started at" %>
   <div class='input-group date' id='worked_from_picker'>
-    <input type='text' class="form-control" name='report[worked_from]' value='<%= if defined? @post.worked_from.strftime then @post.worked_from.strftime("%R") else '' end %>>' />
+    <input type='text' class="form-control" name='report[worked_from]' value='<%= if defined? @report.worked_from.strftime then @report.worked_from.strftime("%R") else '' end %>>' />
 <span class="input-group-addon">
     <span class="glyphicon glyphicon-calendar"></span>
 </span>
@@ -47,7 +47,7 @@
 <div class="form-group">
   <%= f.label :worked_until, "Work done at" %>
   <div class='input-group date' id='worked_until_picker'>
-    <input type='text' class="form-control" name='report[worked_until]' value='<%= if defined? @post.worked_until.strftime then @post.worked_until.strftime("%R") else '' end %>>' />
+    <input type='text' class="form-control" name='report[worked_until]' value='<%= if defined? @report.worked_until.strftime then @report.worked_until.strftime("%R") else '' end %>>' />
 <span class="input-group-addon">
     <span class="glyphicon glyphicon-calendar"></span>
 </span>

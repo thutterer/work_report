@@ -8,30 +8,30 @@ class Admin::ReportsController < Admin::BaseController
 
 
   def dashboard
-    @published_post_count = Report.published.count
-    @draft_post_count = Report.drafted.count
+    @published_report_count = Report.published.count
+    @draft_report_count = Report.drafted.count
     render :template => 'shared/reports/dashboard'
   end
 
   def index
-    @posts = Report.published.page(params[:page]).per(50)
+    @reports = Report.published.page(params[:page]).per(50)
     render :template => 'shared/reports/index'
   end
 
   def drafts
-    @posts = Report.drafted.page(params[:page]).per(50)
+    @reports = Report.drafted.page(params[:page]).per(50)
     render :template => 'shared/reports/drafts'
   end
 
   def new
-    @post = Report.new
+    @report = Report.new
     render :template => 'shared/reports/new'
   end
 
   def create
-    @post = Report.new(post_params)
-    @post.user_id = current_user.id
-    if @post.save
+    @report = Report.new(post_params)
+    @report.user_id = current_user.id
+    if @report.save
       redirect_to admin_reports_dashboard_path, notice: "New report published."
     else
       flash[:alert] = "Report not published."
@@ -44,8 +44,8 @@ class Admin::ReportsController < Admin::BaseController
   end
 
   def update
-    @post.slug = nil
-    if @post.update(post_params)
+    @report.slug = nil
+    if @report.update(post_params)
       redirect_to admin_reports_dashboard_path, notice: "Report successfully edited."
     else
       flash[:alert] = "Report was not edited."
@@ -54,7 +54,7 @@ class Admin::ReportsController < Admin::BaseController
   end
 
   def destroy
-    @post.destroy
+    @report.destroy
     redirect_to admin_reports_path, notice: "Report deleted."
   end
 
@@ -62,14 +62,19 @@ class Admin::ReportsController < Admin::BaseController
   private
 
   def set_post
-    @post = Report.friendly.find(params[:id])
+    @report = Report.friendly.find(params[:id])
   end
 
   def post_params
-    params.require(:post).permit(
+    #FIXME this is not fitting the other controllers function! -> broken!
+    params.require(:report).permit(
     :title,
+    :note,
     :content_md,
     :draft,
+    :workday,
+    :worked_from,
+    :worked_until,
     :updated_at
     )
   end

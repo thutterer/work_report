@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   end
   
 # Relations
-has_many :posts
+has_many :reports
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

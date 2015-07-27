@@ -58,38 +58,38 @@ class ReportsController < BaseController
   end
 
   def dashboard
-    @published_post_count = Report.published.count
-    @draft_post_count = Report.drafted.count
+    @published_report_count = Report.published.count
+    @draft_report_count = Report.drafted.count
     render :template => 'shared/reports/dashboard'
   end
 
   def index
-    @posts = Report.published.page(params[:page]).per(50)
+    @reports = Report.published.page(params[:page]).per(50)
     render :template => 'shared/reports/index'
   end
 
   def show
-    @post = Report.friendly.find(params[:id])
+    @report = Report.friendly.find(params[:id])
     render :template => 'shared/reports/show'
   rescue
     redirect_to root_path
   end
 
   def drafts
-    @posts = Report.drafted.page(params[:page]).per(50)
+    @reports = Report.drafted.page(params[:page]).per(50)
     render :template => 'shared/reports/drafts'
   end
 
   def new
-    @post = Report.new(title: Time.now.strftime("%R"), workday: Time.now, worked_from: Time.now)
+    @report = Report.new(title: Time.now.strftime("%R"), workday: Time.now, worked_from: Time.now)
     render :template => 'shared/reports/new'
   end
 
   def create
-    @post = Report.new(post_params)
-    @post.user_id = current_user.id
-    @post.title = params[:report][:workday]
-    if @post.save
+    @report = Report.new(post_params)
+    @report.user_id = current_user.id
+    @report.title = params[:report][:workday]
+    if @report.save
       redirect_to reports_month_path, notice: "New report published."
     else
       flash[:alert] = "Report not published."
@@ -102,10 +102,10 @@ class ReportsController < BaseController
   end
 
   def update
-    @post.slug = nil
-    #@post.title = @post.workday.strftime("%Y-%m-%d")
-    @post.title = params[:report][:workday]
-    if @post.update(post_params)
+    @report.slug = nil
+    #@report.title = @report.workday.strftime("%Y-%m-%d")
+    @report.title = params[:report][:workday]
+    if @report.update(post_params)
       redirect_to reports_month_path, notice: "Report successfully edited."
     else
       flash[:alert] = "Report was not edited."
@@ -114,7 +114,7 @@ class ReportsController < BaseController
   end
 
   def destroy
-    @post.destroy
+    @report.destroy
     redirect_to reports_path, notice: "Report deleted."
   end
 
@@ -122,7 +122,7 @@ class ReportsController < BaseController
   private
 
   def set_post
-    @post = Report.friendly.find(params[:id])
+    @report = Report.friendly.find(params[:id])
   end
 
   def post_params
