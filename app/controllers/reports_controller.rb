@@ -16,10 +16,10 @@ class ReportsController < BaseController
       @year = Time.now.year
     end
     if @month
-      @workdays = Report.workdays_by_month(@month, @year).order(:workday)
+      @reports = Report.by_month(@month, @year).order(:workday)
 
       @secs_in_month = 0
-      @workdays.each { |w| @secs_in_month += w.worked_seconds}
+      @reports.each { |w| @secs_in_month += w.worked_seconds}
 
       @days = []
       Time.days_in_month(@month, @year).times { |i| @days << "#{@year}-#{format('%02d', @month)}-#{format('%02d', i+1)}"}

@@ -1,4 +1,5 @@
 class Admin::ReportsController < Admin::BaseController
+  #FIXME this is not fitting the other controllers function! -> broken!
 
   before_action :set_post, only: [
     :edit,
@@ -66,7 +67,6 @@ class Admin::ReportsController < Admin::BaseController
   end
 
   def post_params
-    #FIXME this is not fitting the other controllers function! -> broken!
     params.require(:report).permit(
     :title,
     :note,

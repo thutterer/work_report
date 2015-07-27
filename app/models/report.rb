@@ -24,7 +24,7 @@ class Report < ActiveRecord::Base
   # Relations
   belongs_to :user
 
-  def self.workdays_by_month(month, year = Time.now.year)
+  def self.by_month(month, year = Time.now.year)
     month = format('%02d', month)
     where(workday: "#{year}-#{month}-01".."#{year}-#{month}-#{Time.days_in_month(month.to_i, year)}")
   end
