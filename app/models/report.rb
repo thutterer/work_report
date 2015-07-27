@@ -9,13 +9,13 @@ class Report < ActiveRecord::Base
   before_save { |report| report.break_duration = "00:00" unless report.break_duration}
 
   # Validations
-  validates :title, presence: true, length: { maximum: 100 }, uniqueness: true
-  validates :content_md, presence: true
+  validates :title, presence: true, uniqueness: true
 
-  validates :worked_until, presence: true, unless: :is_a_draft?
-    def is_a_draft?
-      draft
-    end
+  ### not needed anymore but as a reminder how to write custom validations like this :)
+  # validates :worked_until, presence: true, unless: :is_a_draft?
+  #   def is_a_draft?
+  #     draft
+  #   end
 
   # Pagination
   paginates_per 30
@@ -29,6 +29,7 @@ class Report < ActiveRecord::Base
   end
 
   def worked_seconds
+    return 0 if worked_from.nil? or break_duration.nil? or worked_until.nil?
     worked_until - worked_from - break_duration.seconds_since_midnight
   end
 
