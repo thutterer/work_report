@@ -22,7 +22,7 @@
           </tr>
       <% else %>
           <tr>
-            <td><%= day %></td>
+            <td><%= link_to day, new_report_path(workday: day) %></td>
             <td><%= Date.parse(day).strftime('%A') %></td>
             <td></td>
             <td></td>
