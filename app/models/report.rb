@@ -7,6 +7,12 @@ class Report < ActiveRecord::Base
   before_validation { |report| report.title = report.workday.strftime('%F')}
   before_save { MarkdownWriter.update_html(self) }
   before_save { |report| report.break_duration = "00:00" unless report.break_duration}
+  before_save { |report| report.update_worktime}
+
+  # FIXME: these callbacks create a lot of calculations
+  # TODO:  only add the worktime difference to the current overtime value
+  after_create { |report| report.user.update(overtime: report.user.reports.sum(:worktime)) }
+  after_save   { |report| report.user.update(overtime: report.user.reports.sum(:worktime)) }
 
   # Validations
   validates :title, presence: true
@@ -32,6 +38,13 @@ class Report < ActiveRecord::Base
   def worked_seconds
     return 0 if worked_from.nil? or break_duration.nil? or worked_until.nil?
     worked_until - worked_from - break_duration.seconds_since_midnight
+  end
+
+  def update_worktime
+    worktime = (if worked_from.nil? or break_duration.nil? or worked_until.nil? then 0
+                else worked_until - worked_from - break_duration.seconds_since_midnight
+                end)
+    write_attribute(:worktime, worktime)
   end
 
   # Scopes

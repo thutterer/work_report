@@ -17,7 +17,7 @@
             <td><%= report.workday.strftime('%A') %></td>
             <td><%= report.worked_from %></td>
             <td><%= report.worked_until %></td>
-            <td><%= Time.at(report.worked_seconds).utc.strftime("%H:%M") unless report.worked_seconds == 0 %></td>
+            <td><%= Time.at(report.worktime).utc.strftime("%H:%M") unless report.worktime == 0 %></td>
             <td><%= report.note %></td>
           </tr>
       <% else %>
