@@ -13,7 +13,7 @@
   <% @days.each do |day| %>
       <% if report = current_user.reports.where(workday: day).first %>
           <tr>
-            <td><%= link_to report.title, edit_report_path(report.id) %></td>
+            <td><%= link_to report.title, edit_report_path(report.id),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'} %></td>
             <td><%= report.workday.strftime('%A') %></td>
             <td><%= report.worked_from %></td>
             <td><%= report.worked_until %></td>
@@ -22,7 +22,7 @@
           </tr>
       <% else %>
           <tr>
-            <td><%= link_to day, new_report_path(workday: day) %></td>
+            <td><%= link_to day, new_report_path(workday: day),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'} %></td>
             <td><%= Date.parse(day).strftime('%A') %></td>
             <td></td>
             <td></td>

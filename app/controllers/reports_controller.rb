@@ -76,7 +76,11 @@ class ReportsController < BaseController
   def new
     workday = DateTime.parse(params[:workday]) rescue Time.now
     @report = Report.new(title: workday.strftime("%R"), workday: workday, worked_from: Time.now)
-    render :template => 'shared/reports/new'
+
+    respond_to do |format|
+      format.html { render :template => 'shared/reports/new' }
+      format.js { render 'shared/reports/new' }
+    end
   end
 
   def create

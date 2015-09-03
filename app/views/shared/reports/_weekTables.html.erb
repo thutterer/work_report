@@ -12,14 +12,14 @@
       <% days.each do |day| %>
         <% if (report = current_user.reports.where(workday: day).first) %>
           <tr>
-            <td width="10%"><%= link_to day, edit_report_path(report.id) %>
+            <td width="10%"><%= link_to day, edit_report_path(report.id), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'} %>
               <br><%= report.workday.strftime('%A') %></td>
             <td><%= report.content_html.html_safe %></td>
             <td width="10%"><%= Time.at(report.worked_seconds).utc.strftime("%H:%M") unless report.worked_seconds == 0 %></td>
           </tr>
         <% else %>
           <tr>
-            <td width="10%"><%= link_to day, new_report_path(workday: day) %>
+            <td width="10%"><%= link_to day, new_report_path(workday: day), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'} %>
               <br><%= Date.parse(day).strftime('%A') %></td>
             <td></td>
             <td width="10%"></td>
