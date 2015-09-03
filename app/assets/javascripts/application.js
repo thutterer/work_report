@@ -19,3 +19,4 @@
 //= require bootstrap-switch
 //= require common
 //= require month
+//= require clock
