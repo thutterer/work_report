@@ -36,16 +36,16 @@ class Report < ActiveRecord::Base
   end
 
 
-  def self.actual_workhours
-    self.where_worked.map(&:worked_seconds).sum / 3600
+  def self.actual_work
+    self.where_worked.map(&:worked_seconds).sum
   end
 
-  def self.expected_workhours
-    self.where_worked.count * 8 # TODO make 8h a configurable
+  def self.expected_work
+    self.where_worked.count * 8 * 3600 # TODO make 8h a configurable
   end
 
   def self.balance
-    self.actual_workhours - self.expected_workhours
+    self.actual_work - self.expected_work
   end
 
 

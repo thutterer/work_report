@@ -1,2 +1,4 @@
-$('#tableMonth').html("<%= j render 'shared/reports/monthTable' %>");
-$('#divWeeks').html("<%= j render 'shared/reports/weekTables' %>");
+$('#monthDiv').html("<%= j render 'shared/reports/monthTable' %>")
+$('#weeksDiv').html("<%= j render 'shared/reports/weekTables' %>")
+
+$(document).trigger('page:change')

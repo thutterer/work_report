@@ -1,6 +1,15 @@
 <% title("#{@year}-#{@month}") %>
-<h3 class="page-title">Reports</h3>
-<hr/>
+<div class="btn-group btn-group-justified hidden-print" role="group" aria-label="...">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn disabled" id="todayButton">Today</button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn" id="weeksButton">Weeks</button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-primary" id="monthButton">Month</button>
+  </div>
+</div>
 
 <%= form_tag("/reports/index", method: "post", id: "monthForm", remote: "true") do %>
     <div class="hidden-print" style="overflow:hidden;">
@@ -12,12 +21,15 @@
             </div>
           </div>
         </div>
-        <div class="row">
+
+<!--        <div class="row">
           <div class="col-md-12" align="right">
             <input type="checkbox" name="toggleView" id="toggleView" checked data-on-text="Month" data-off-text="Weeks" data-on-color="default" data-off-color="default">
           </div>
         </div>
+-->
       </div>
+
       <script type="text/javascript">
           $(function () {
               $('#monthpicker').datetimepicker({
@@ -30,9 +42,10 @@
 <% end %>
 
 
-<%= render 'shared/reports/monthTable' %>
-
-<div id="divWeeks" style="display: none;">
-  <%= render 'shared/reports/weekTables' %>
+<div id="monthDiv" style="display: block;">
+  <%= render 'shared/reports/monthTable' %>
 </div>
 
+<div id="weeksDiv" style="display: none;">
+  <%= render 'shared/reports/weekTables' %>
+</div>

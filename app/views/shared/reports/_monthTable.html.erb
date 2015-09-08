@@ -1,4 +1,18 @@
-<table class="table table-hover table-striped" id="tableMonth">
+<%# TODO make this less hacky %>
+<% balance = current_user.reports.where("workday < '#{@days.last}'").balance %>
+<% if balance > 0 %>
+    <div class="panel panel-success">
+      <div class="panel-heading text-right">
+        Balance: <%= Time.at(balance).utc.strftime("%H:%M") %>
+<% else %>
+    <div class="panel panel-danger">
+      <div class="panel-heading text-right">
+        Balance: -<%= Time.at(-balance).utc.strftime("%H:%M") %>
+<% end %>
+</div>
+</div>
+
+<table class="table table-hover" id="tableMonth">
   <thead>
   <tr>
     <th>Date</th>
@@ -9,21 +23,31 @@
     <th>Note</th>
   </tr>
   </thead>
-  <tbody>
+  <tbody style="cursor: pointer;">
   <% @days.each do |day| %>
       <% if report = current_user.reports.where(workday: day).first %>
-          <tr>
-            <td><%= link_to report.title, edit_report_path(report.id),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'} %></td>
-            <td><%= report.workday.strftime('%A') %></td>
+        <% weekday = report.workday.strftime('%A') %>
+        <% if %w(Saturday Sunday).include? weekday %>
+          <tr class="active" data-link="<%= edit_report_path(report.id) %>">
+        <% else %>
+          <tr data-link="<%= edit_report_path(report.id) %>">
+        <% end %>
+            <td><%= report.title %></td>
+            <td><%= weekday %></td>
             <td><%= report.worked_from %></td>
             <td><%= report.worked_until %></td>
             <td><%= Time.at(report.worked_seconds).utc.strftime("%H:%M") unless report.worked_seconds == 0 %></td>
             <td><%= report.note %></td>
           </tr>
       <% else %>
-          <tr>
-            <td><%= link_to day, new_report_path(workday: day),  {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'} %></td>
-            <td><%= Date.parse(day).strftime('%A') %></td>
+          <% weekday = Date.parse(day).strftime('%A') %>
+          <% if %w(Saturday Sunday).include? weekday %>
+              <tr class="active" data-link="<%= new_report_path(workday: day) %>">
+          <% else %>
+              <tr data-link="<%= new_report_path(workday: day) %>">
+          <% end %>
+            <td><%= day %></td>
+            <td><%= weekday %></td>
             <td></td>
             <td></td>
             <td></td>

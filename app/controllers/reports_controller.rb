@@ -16,12 +16,14 @@ class ReportsController < BaseController
       @year = Time.now.year
     end
     if @month
-      @secs_in_month = 0
-      current_user.reports.by_month(@month, @year).order(:workday).each { |w| @secs_in_month += w.worked_seconds}
+      # TODO I think I don't need that anywhere anymore ...
+      #@secs_in_month = 0
+      #current_user.reports.by_month(@month, @year).order(:workday).each { |w| @secs_in_month += w.worked_seconds}
 
       @days = []
       Time.days_in_month(@month, @year).times { |i| @days << "#{@year}-#{format('%02d', @month)}-#{format('%02d', i+1)}"}
 
+      # TODO move this voodoo into some method
       @weeks = Hash.new
       min_week = DateTime.parse(@days.first).strftime('%W').to_i
       max_week = DateTime.parse(@days.last).strftime('%W').to_i
@@ -90,6 +92,7 @@ class ReportsController < BaseController
       redirect_to reports_path, notice: "New report published."
     else
       flash[:alert] = "Report not published."
+      #FIXME see comment in update method
       render :template => 'shared/reports/new'
     end
   end
@@ -104,6 +107,7 @@ class ReportsController < BaseController
       redirect_to reports_path, notice: "Report successfully edited."
     else
       flash[:alert] = "Report was not edited."
+      #FIXME should refresh modal. not rendering old edit view! remove edit view btw ;)
       render :template => 'shared/reports/edit'
     end
   end

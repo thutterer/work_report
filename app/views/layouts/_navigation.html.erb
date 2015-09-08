@@ -7,7 +7,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to 'Home', root_path, class: 'navbar-brand' %>
+      <% if Rails.application.assets.find_asset 'navbar-brand.png' %>
+        <a class="navbar-brand" href="#">
+          <%= image_tag 'navbar-brand.png', size: "60", alt: "Logo"%>
+        </a>
+      <% else %>
+        <%= link_to 'Home', root_path, class: 'navbar-brand' %>
+      <% end %>
+
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -20,6 +27,7 @@
         <% else %>
             <li class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <i class="fa fa-user"></i>
                 <%= current_user.username %>
                 <span class="caret"></span>
               </button>
