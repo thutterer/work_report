@@ -28,6 +28,9 @@ has_many :reports
   validates :username, uniqueness: { case_sensitive: false }
   validates_format_of :username, with: /\A[a-zA-Z0-9]*\z/, on: :create, message: "can only contain letters and digits"
   validates :username, length: { in: 4..15 }
+
+  validates :firstname, presence: true
+  validates :lastname, presence: true
   # :email
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
@@ -56,5 +59,9 @@ has_many :reports
 
   def self.users_count
     where("admin = ? AND locked = ?",false,false).count
+  end
+
+  def fullname
+    [firstname, lastname].join(' ')
   end
 end
