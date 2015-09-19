@@ -62,6 +62,7 @@ class Admin::UsersController < Admin::BaseController
     :username,
     :firstname,
     :lastname,
+    :locale,
     :email,
     :password,
     :password_confirmation,

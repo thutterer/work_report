@@ -9,7 +9,7 @@ class ReportsController < BaseController
 
   def index
     if defined? params[:monthYear].split
-      @month = Date::MONTHNAMES.index(params[:monthYear].split.first).to_i
+      @month = params[:monthYear].split.first.to_i
       @year = params[:monthYear].split.second.to_i
     else
       @month = Time.now.month
@@ -47,8 +47,8 @@ class ReportsController < BaseController
       end
 
       respond_to do |format|
-        format.html { render :template => 'shared/reports/index' }
-        format.js { render :template => 'shared/reports/index' }
+        format.html { render :template => 'shared/reports/index', locale: current_user.locale }
+        format.js { render :template => 'shared/reports/index', locale: current_user.locale }
       end
 
     else
@@ -89,9 +89,9 @@ class ReportsController < BaseController
     @report = Report.new(post_params)
     @report.user_id = current_user.id
     if @report.save
-      redirect_to reports_path, notice: "New report published."
+      redirect_to reports_path, notice: t('alert.saved')
     else
-      flash[:alert] = "Report not published."
+      flash[:alert] = t('alert.not_saved')
       #FIXME see comment in update method
       render :template => 'shared/reports/new'
     end
@@ -104,9 +104,9 @@ class ReportsController < BaseController
   def update
     @report.slug = nil
     if @report.update(post_params)
-      redirect_to reports_path, notice: "Report successfully edited."
+      redirect_to reports_path, notice: t('alert.saved')
     else
-      flash[:alert] = "Report was not edited."
+      flash[:alert] = t(:alert.not_saved)
       #FIXME should refresh modal. not rendering old edit view! remove edit view btw ;)
       render :template => 'shared/reports/edit'
     end
@@ -114,7 +114,7 @@ class ReportsController < BaseController
 
   def destroy
     @report.destroy
-    redirect_to reports_path, notice: "Report deleted."
+    redirect_to reports_path, notice: t('alert.deleted')
   end
 
 

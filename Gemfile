@@ -11,6 +11,10 @@ gem 'turbolinks', '2.5.3'
 gem 'jbuilder', '2.3.0'
 gem 'bcrypt', '3.1.10'
 
+# Translations
+gem 'rails-i18n'
+gem 'devise-i18n'
+
 # Necessary for Windows OS (won't install on *nix systems)
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 

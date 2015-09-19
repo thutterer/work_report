@@ -1,23 +1,51 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  today: "today"
+  weeks: "weeks"
+  month: "month"
+  day: "date"
+  week: "Week"
+  weekday: "weekday"
+  from: "from"
+  until: "until"
+  duration: "duration"
+  note: "note"
+  balance: "Balance"
+  new_report: "new report"
+  edit_report: "edit report"
+  work_started: "work started at"
+  work_done: "work done at"
+  break_duration: "break duration"
+  report: "report"
+  optional_note: "short note (optional)"
+  tasks_markdown: "tasks (markdown enabled)"
+  cancel: "cancel"
+  save_changes: "save"
+  delete_report: "delete"
+  never: "never"
+  show_weekends: "show weekends"
+  date:
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+  alert:
+    saved: "Successfully saved"
+    not_saved: "Failed to save"
+    deleted: "Successfully deleted"
+  edit:
+    save: "Save"
+    delete: "Delete"
+    are_you_sure: "Are you sure?"
+  user:
+    sign_in: "Sign in"
+    sign_up: "Sign up"
+    sign_out: "Sign out"
+    edit_account: "Edit account"
+    admin_settings: "Admin settings"
+    firstname: "Firstname"
+    lastname: "Lastname"
+    locale: "Language"
+    email: "E-Mail"
+    new_password: "New Password"
+    new_password_confirm: "Confirm new password"
+    confirm_explaination: "we need your current password to confirm your changes"
+    current_password: "Current password"
+    leave_blank: "leave blank if you don't want to change it"
+    waiting_for_confirm: "Currently waiting confirmation for"

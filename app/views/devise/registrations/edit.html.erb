@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-6 ">
-    <h1>Edit your profile</h1>
-
+    <h1><%= t('user.edit_account') %></h1>
+    <div class="well">
     <%= form_for(resource, :as => resource_name,
     :url => registration_path(resource_name),
     :html => { :method => :put, role: "form" }) do |f| %>
@@ -9,7 +9,7 @@
     <%= devise_error_messages! %>
 
     <div class="form-group">
-      <%= f.label :firstname %>
+      <%= f.label :firstname, t('user.firstname') %>
       <div class="row">
         <div class="col-sm-6">
           <%= f.text_field :firstname, class: "form-control" %>
@@ -18,7 +18,7 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :lastname %>
+      <%= f.label :lastname, t('user.lastname') %>
       <div class="row">
         <div class="col-sm-6">
           <%= f.text_field :lastname, class: "form-control" %>
@@ -26,9 +26,17 @@
       </div>
     </div>
 
+    <div class="form-group">
+      <%= f.label :locale, t('user.locale') %>
+      <div class="row">
+        <div class="col-sm-6">
+          <%= select_tag :locale, options_for_select([['english', 'en'], ['deutsch', 'de']]), name: "user[locale]", class: "form-control" %>
+        </div>
+      </div>
+    </div>
 
-        <div class="form-group">
-      <%= f.label :email %>
+    <div class="form-group">
+      <%= f.label :email, t('user.email') %>
       <div class="row">
         <div class="col-sm-6">
           <%= f.email_field :email, :autofocus => true, class: "form-control" %>
@@ -39,13 +47,13 @@
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div class="row">
       <div class="col-sm-6">
-        <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+        <p><%= t('user.waiting_for_confirm') %>: <%= resource.unconfirmed_email %></p>
       </div>
     </div>
     <% end %>
 
     <div class="form-group">
-      <%= f.label :password %> <i><small>(leave blank if you don't want to change it)</small></i>
+      <%= f.label :password, t('user.new_password') %> <i><small>(<%= t('user.leave_blank') %>)</small></i>
       <div class="row">
         <div class="col-sm-6">
           <%= f.password_field :password, :autocomplete => "off", class: "form-control" %>
@@ -54,7 +62,7 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :password_confirmation %>
+      <%= f.label :password_confirmation, t('user.new_password_confirm') %>
       <div class="row">
         <div class="col-sm-6">
           <%= f.password_field :password_confirmation, class: "form-control" %>
@@ -63,7 +71,7 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :current_password %> <i><small>(we need your current password to confirm your changes)</small></i>
+      <%= f.label :current_password, t('user.current_password') %> <i><small>(<%= t('user.confirm_explaination') %>)</small></i>
       <div class="row">
         <div class="col-sm-6">
           <%= f.password_field :current_password, class: "form-control" %>
@@ -73,10 +81,12 @@
 
     <div class="row">
       <div class="col-sm-6">
-        <%= f.submit "Update", class: "btn btn-primary" %> - <%= link_to "Cancel", inside_path %>
+        <%= f.submit t('save_changes'), class: "btn btn-primary" %> - <%= link_to t('cancel'), inside_path %>
       </div>
     </div>
 
     <% end %>
+
+  </div>
   </div>
 </div>

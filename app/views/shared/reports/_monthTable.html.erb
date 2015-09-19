@@ -1,33 +1,33 @@
-<%# TODO make this less hacky %>
 <% balance = current_user.reports.where("workday < '#{@days.last}'").balance %>
-<% if balance > 0 %>
-    <div class="panel panel-success">
-      <div class="panel-heading text-right">
-        Balance: <%= Time.at(balance).utc.strftime("%H:%M") %>
+<% if balance >= 0 %>
+<div class="panel panel-success">
+  <div class="panel-heading text-right">
+    <%= t(:balance) %>: <%= Time.at(balance).utc.strftime("%H:%M") %>
 <% else %>
-    <div class="panel panel-danger">
-      <div class="panel-heading text-right">
-        Balance: -<%= Time.at(-balance).utc.strftime("%H:%M") %>
+<div class="panel panel-danger">
+  <div class="panel-heading text-right">
+    <%= t(:balance) %>: -<%= Time.at(-balance).utc.strftime("%H:%M") %>
 <% end %>
-</div>
+  </div>
 </div>
 
-<table class="table table-hover" id="tableMonth">
+<div class="well">
+<table class="table table-hover table-condensed" id="tableMonth">
   <thead>
   <tr>
-    <th>Date</th>
-    <th>Weekday</th>
-    <th>From</th>
-    <th>Until</th>
-    <th>Duration</th>
-    <th>Note</th>
+    <th><%= t(:day) %></th>
+    <th><%= t(:weekday) %></th>
+    <th><%= t(:from) %></th>
+    <th><%= t(:until) %></th>
+    <th><%= t(:duration) %></th>
+    <th><%= t(:note) %></th>
   </tr>
   </thead>
   <tbody style="cursor: pointer;">
   <% @days.each do |day| %>
       <% if report = current_user.reports.where(workday: day).first %>
-        <% weekday = report.workday.strftime('%A') %>
-        <% if %w(Saturday Sunday).include? weekday %>
+        <% weekday = l(report.workday, format: '%A') %>
+        <% if [0, 6].include? day.to_date.wday %>
           <tr class="active" data-link="<%= edit_report_path(report.id) %>">
         <% else %>
           <tr data-link="<%= edit_report_path(report.id) %>">
@@ -40,8 +40,8 @@
             <td><%= report.note %></td>
           </tr>
       <% else %>
-          <% weekday = Date.parse(day).strftime('%A') %>
-          <% if %w(Saturday Sunday).include? weekday %>
+          <% weekday = l(day.to_date, format: '%A') %>
+          <% if [0, 6].include? day.to_date.wday %>
               <tr class="active" data-link="<%= new_report_path(workday: day) %>">
           <% else %>
               <tr data-link="<%= new_report_path(workday: day) %>">
@@ -57,3 +57,4 @@
   <% end %>
   </tbody>
 </table>
+</div>

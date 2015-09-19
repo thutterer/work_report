@@ -1,27 +1,32 @@
+<div class="panel panel-success">
+  <div class="panel-heading text-right">
+    <input type="checkbox" id="toggleWeekends"> <%= t('show_weekends') %>
+  </div>
+</div>
 <% @weeks.each do |week, days| %>
   <div class="well">
-      <h4>Week <%= week %></h4>
-      <table class="table table-hover table-striped" class="tableWeek">
+      <h4><%= "#{t(:week)} #{week}" %></h4>
+      <table class="table table-hover" class="tableWeek">
         <thead>
         <tr>
-          <th width="10%">Day</th>
-          <th>Report</th>
-          <th width="10%">Duration</th>
+          <th width="10%"><%= t(:day) %></th>
+          <th><%= t(:report) %></th>
+          <th width="10%"><%= t(:duration) %></th>
         </tr>
         </thead>
         <tbody style="cursor: pointer;">
           <% days.each do |day| %>
             <% if (report = current_user.reports.where(workday: day).first) %>
-              <tr data-link="<%= edit_report_path(report.id) %>">
+              <tr class="<%= "weekend" if ([0, 6].include? day.to_date.wday) %>" data-link="<%= edit_report_path(report.id) %>">
                 <td width="10%"><%= day %>
-                  <br><%= report.workday.strftime('%A') %></td>
+                  <br><%= l(report.workday, format: '%A') %></td>
                 <td><%= report.content_html.html_safe %></td>
                 <td width="10%"><%= Time.at(report.worked_seconds).utc.strftime("%H:%M") unless report.worked_seconds == 0 %></td>
               </tr>
             <% else %>
-              <tr data-link="<%= new_report_path(workday: day) %>">
+              <tr class="<%= "weekend" if ([0, 6].include? day.to_date.wday) %>" data-link="<%= new_report_path(workday: day) %>">
                 <td width="10%"><%= day %>
-                  <br><%= Date.parse(day).strftime('%A') %></td>
+                  <br><%= l(Date.parse(day), format: '%A') %></td>
                 <td></td>
                 <td width="10%"></td>
               </tr>

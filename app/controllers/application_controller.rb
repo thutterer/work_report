@@ -6,6 +6,11 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_filter :reject_locked!, if: :devise_controller?
 
+  before_action :set_locale
+
+  def set_locale
+    current_user ? I18n.locale = current_user.locale : I18n.locale = I18n.default_locale
+  end
 
   # Devise permitted params
   def configure_permitted_parameters
@@ -13,6 +18,7 @@ class ApplicationController < ActionController::Base
       :username,
       :firstname,
       :lastname,
+      :locale,
       :email,
       :password,
       :password_confirmation)
@@ -21,6 +27,7 @@ class ApplicationController < ActionController::Base
       :username,
       :firstname,
       :lastname,
+      :locale,
       :email,
       :password,
       :password_confirmation,

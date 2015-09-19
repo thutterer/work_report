@@ -20,8 +20,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if !user_signed_in? %>
-            <li><%= link_to "Sign in", new_user_session_path %></li>
-            <li><%= link_to "Sign up", new_user_registration_path %></li>
+            <li><%= link_to t('user.sign_in'), new_user_session_path %></li>
+            <li><%= link_to t('user.sign_up'), new_user_registration_path %></li>
         <% else %>
             <li class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -29,13 +29,12 @@
                 <%= current_user.firstname %>
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><%= link_to "Protected Page", inside_path %></li>
-                <li><%= link_to "Edit your account", edit_user_registration_path %></li>
+              <ul class="dropdown-menu" aria-labelledby="userDropdownMenu">
+                <li><%= link_to t('user.edit_account'), edit_user_registration_path %></li>
                 <% if current_user.admin? %>
-                    <li><%= link_to "Admin", admin_root_path %></li>
+                    <li><%= link_to t('user.admin_settings'), admin_root_path %></li>
                 <% end %>
-                <li><%= link_to "Sign out", destroy_user_session_path, data:{method: :delete} %></li>
+                <li><%= link_to t('user.sign_out'), destroy_user_session_path, data:{method: :delete} %></li>
               </ul>
             </li>
         <% end %>

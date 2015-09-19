@@ -12,25 +12,31 @@ $(document).on 'page:change', ->
     $('#weeksButton').removeClass('btn-primary');
     $('#monthButton').removeClass('btn-primary');
     $('#todayButton').addClass('btn-primary')
-    $('#weeksDiv').fadeOut()
-    $('#monthDiv').fadeOut()
-    $('#todayDiv').fadeIn()
+    $('#weeksDiv').hide()
+    $('#monthDiv').hide()
+    $('#todayDiv').show()
 
   $('#weeksButton').on 'click', ->
     $('#todayButton').removeClass('btn-primary');
     $('#monthButton').removeClass('btn-primary');
     $('#weeksButton').addClass('btn-primary')
-    $('#todayDiv').fadeOut()
-    $('#monthDiv').fadeOut()
-    $('#weeksDiv').fadeIn()
+    $('#todayDiv').hide()
+    $('#monthDiv').hide()
+    $('#weeksDiv').show()
+    $('.weekend').hide()
 
   $('#monthButton').on 'click', ->
     $('#todayButton').removeClass('btn-primary');
     $('#weeksButton').removeClass('btn-primary');
     $('#monthButton').addClass('btn-primary')
-    $('#todayDiv').fadeOut()
-    $('#weeksDiv').fadeOut()
-    $('#monthDiv').fadeIn()
+    $('#todayDiv').hide()
+    $('#weeksDiv').hide()
+    $('#monthDiv').show()
+
+  $('.weekend').hide()
+
+  $('#toggleWeekends').on 'change', ->
+    $('.weekend').toggle()
 
   $('.table > tbody > tr').on 'click', (e) ->
     e.preventDefault()
