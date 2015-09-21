@@ -30,7 +30,7 @@
       <%= f.label :locale, t('user.locale') %>
       <div class="row">
         <div class="col-sm-6">
-          <%= select_tag :locale, options_for_select([['english', 'en'], ['deutsch', 'de']]), name: "user[locale]", class: "form-control" %>
+          <%= select_tag :locale, options_for_select([['english', 'en'], ['deutsch', 'de']], I18n.locale), name: "user[locale]", class: "form-control" %>
         </div>
       </div>
     </div>
