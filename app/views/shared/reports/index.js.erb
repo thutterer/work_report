@@ -1,4 +1,5 @@
 $('#monthDiv').html("<%= j render 'shared/reports/monthTable' %>")
 $('#weeksDiv').html("<%= j render 'shared/reports/weekTables' %>")
+$('#alertDiv').html("<%= j render 'layouts/messages' %>")
 
 $(document).trigger('page:change')

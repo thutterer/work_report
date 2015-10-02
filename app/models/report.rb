@@ -48,6 +48,9 @@ class Report < ActiveRecord::Base
     self.actual_work - self.expected_work
   end
 
+  def self.today_exists
+    where(workday: Time.now.strftime('%F')).first
+  end
 
   def worked_seconds
     return 0 if worked_from.nil? or break_duration.nil? or worked_until.nil?

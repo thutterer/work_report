@@ -9,27 +9,20 @@ $(document).on 'page:change', ->
     $('#weeksDiv').fadeToggle()
 
   $('#todayButton').on 'click', ->
-    $('#weeksButton').removeClass('btn-primary');
-    $('#monthButton').removeClass('btn-primary');
-    $('#todayButton').addClass('btn-primary')
-    $('#weeksDiv').hide()
-    $('#monthDiv').hide()
-    $('#todayDiv').show()
+    $.ajax(url: $('#weekTable tbody tr[data-day="' + moment().format("YYYY-MM-DD") + '"]').data('link'), dataType: 'script', success: enableText)
 
   $('#weeksButton').on 'click', ->
-    $('#todayButton').removeClass('btn-primary');
-    $('#monthButton').removeClass('btn-primary');
-    $('#weeksButton').addClass('btn-primary')
-    $('#todayDiv').hide()
+    $('#todayButton').removeClass('active')
+    $('#monthButton').removeClass('active')
+    $('#weeksButton').addClass('active')
     $('#monthDiv').hide()
     $('#weeksDiv').show()
     $('.weekend').hide()
 
   $('#monthButton').on 'click', ->
-    $('#todayButton').removeClass('btn-primary');
-    $('#weeksButton').removeClass('btn-primary');
-    $('#monthButton').addClass('btn-primary')
-    $('#todayDiv').hide()
+    $('#todayButton').removeClass('active')
+    $('#weeksButton').removeClass('active')
+    $('#monthButton').addClass('active')
     $('#weeksDiv').hide()
     $('#monthDiv').show()
 
@@ -40,4 +33,19 @@ $(document).on 'page:change', ->
 
   $('.table > tbody > tr').on 'click', (e) ->
     e.preventDefault()
-    $.ajax(url: $(e.currentTarget).data('link'), dataType: 'script')
+    $.ajax(url: $(e.currentTarget).data('link'), dataType: 'script', success: enableText)
+
+
+enableText = () ->
+  $('.timepicker').on 'dp.change', updateText
+  updateText()
+
+updateText = () ->
+  worked_from = moment($('#worked_from_picker > input').val(), 'HH:mm')
+  worked_until = moment($('#worked_until_picker > input').val(), 'HH:mm')
+  break_duration = moment($('#break_duration_picker > input').val(), 'HH:mm')
+
+  duration = worked_until.subtract(worked_from).subtract(break_duration)
+  small_text = if duration.isValid() then '<small>' + duration.format('HH:mm') + '</small>' else ''
+
+  $('#modalHeading').html('<h1>' + moment($('#modalHeading').data('date')).format('LL') + small_text + '</h1>')

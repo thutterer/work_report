@@ -3,17 +3,22 @@
     <div class="modal-body">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <%= render 'shared/reports/form' %>
-      <hr/>
     </div>
     <div class="modal-footer">
-      <%= link_to "<i class='fa fa-minus-square'></i> #{t('edit.delete')}".html_safe, report_path(@report), method: :delete, data:{confirm: t('edit.are_you_sure')}, class: "btn btn-small btn-danger" %>
-      <button id="modal-form-submit" class="btn btn-primary"><%= t('edit.save') %></button>
+      <%= link_to "<i class='fa fa-minus-square'></i> #{t('edit.delete')}".html_safe, report_path(@report), method: :delete, remote: true, data:{confirm: t('edit.are_you_sure')}, class: "btn btn-small btn-danger", id: "deleteButton"%>
+      <button id="modal-form-submit" class="btn btn-primary" data-dismiss="modal"><%= t('edit.save') %></button>
     </div>
   </div>
 </div>
 
 <script>
-    $('#modal-form-submit').on('click', function(e){
-        $('#edit_report_<%= @report.id %>').submit();
-    });
+  $('#modal-form-submit').on('click', function(e){
+    $('#edit_report_<%= @report.id %>').submit();
+  });
+
+  $('#deleteButton').on('click', function(){
+    $('.modal').modal('hide');
+  });
+
+
 </script>

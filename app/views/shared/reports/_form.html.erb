@@ -6,96 +6,102 @@
 </ul>
 <% end %>
 
-<%= form_for [@report], role: "form" do |f| %>
+<h1 id="modalHeading" data-date="<%= @report.workday.strftime("%Y-%m-%d") %>"></h1>
 
-<%= f.hidden_field :title, :autofocus => true, class: "form-control monospaced-control" %>
+<%= form_for [@report], remote: true, role: "form" do |f| %>
+  <%= f.hidden_field :title, :autofocus => true, class: "form-control monospaced-control" %>
 
-<div class="form-group">
-  <%= f.label :workday, t(:day) %>
-  <div class='input-group date' id='workday_picker'>
-    <input type='text' class="form-control" readonly="readonly" name='report[workday]' value='<%= if defined? @report.workday.strftime then @report.workday.strftime("%Y-%m-%d") else '' end %>' />
-    <span class="input-group-addon">
+  <div class="form-group hidden">
+    <%= f.label :workday, t(:day) %>
+    <div class='input-group date' id='workday_picker'>
+      <input type='text' class="form-control" readonly="readonly" name='report[workday]' value='<%= if defined? @report.workday.strftime then @report.workday.strftime("%Y-%m-%d") else '' end %>' />
+      <span class="input-group-addon">
         <span class="glyphicon glyphicon-calendar"></span>
-    </span>
-  </div>
-  <script type="text/javascript">
+      </span>
+    </div>
+    <script type="text/javascript">
       $(function () {
-          $('#workday_picker').datetimepicker({
-              format: 'YYYY-MM-DD',
-              locale: '<%= locale %>'
-          });
+        $('#workday_picker').datetimepicker({
+          format: 'YYYY-MM-DD',
+          locale: '<%= locale %>'
+        });
       });
-  </script>
-</div>
+    </script>
+  </div>
 
-<div class="form-group">
-  <%= f.label :worked_from, t(:work_started) %>
-  <div class='input-group date' id='worked_from_picker'>
-    <input type='text' class="form-control" name='report[worked_from]' value='<%= if defined? @report.worked_from.strftime then @report.worked_from.strftime("%R") else '' end %>' />
-<span class="input-group-addon">
-    <span class="glyphicon glyphicon-time"></span>
-</span>
-  </div>
-  <script type="text/javascript">
-      $(function () {
-          $('#worked_from_picker').datetimepicker({
-              format: 'HH:mm',
-              locale: '<%= locale %>'
-          });
-      });
-  </script>
-</div>
+    <div class="row">
+      <div class="col-sm-12">
 
-<div class="form-group">
-  <%= f.label :break_duration, t(:break_duration) %>
-  <div class='input-group date' id='break_duration_picker'>
-    <input type='text' class="form-control" name='report[break_duration]' value='<%= if defined? @report.break_duration.strftime then @report.break_duration.strftime("%R") else '' end %>' />
-    <span class="input-group-addon">
-      <span class="glyphicon glyphicon-cutlery"></span>
-    </span>
-  </div>
-  <script type="text/javascript">
-      $(function () {
-          $('#break_duration_picker').datetimepicker({
-              format: 'HH:mm',
-              locale: '<%= locale %>'
-          });
-      });
-  </script>
-</div>
+        <div class="form-group">
+          <%= f.label :worked_from, t(:work_started) %>
+          <div class='input-group date timepicker' id='worked_from_picker'>
+            <input type='text' class="form-control" name='report[worked_from]' value='<%= if defined? @report.worked_from.strftime then @report.worked_from.strftime("%R") else '' end %>' />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-time"></span>
+            </span>
+          </div>
+          <script type="text/javascript">
+              $(function () {
+                  $('#worked_from_picker').datetimepicker({
+                      format: 'HH:mm',
+                      locale: '<%= locale %>'
+                  });
+              });
+          </script>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :break_duration, t(:break_duration) %>
+          <div class='input-group date timepicker' id='break_duration_picker'>
+            <input type='text' class="form-control" name='report[break_duration]' value='<%= if defined? @report.break_duration.strftime then @report.break_duration.strftime("%R") else '' end %>' />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-cutlery"></span>
+            </span>
+          </div>
+          <script type="text/javascript">
+              $(function () {
+                  $('#break_duration_picker').datetimepicker({
+                      format: 'HH:mm',
+                      locale: '<%= locale %>'
+                  });
+              });
+          </script>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :worked_until, t(:work_done) %>
+          <div class='input-group date timepicker' id='worked_until_picker'>
+            <input type='text' class="form-control" name='report[worked_until]' value='<%= if defined? @report.worked_until.strftime then @report.worked_until.strftime("%R") else '' end %>' />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-time"></span>
+            </span>
+          </div>
+          <script type="text/javascript">
+            $(function () {
+              $('#worked_until_picker').datetimepicker({
+                format: 'HH:mm',
+                locale: '<%= locale %>'
+              });
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <%= f.label :note, t(:note) %>
+    <div class="row">
+      <div class="col-xs-12">
+        <%= f.text_field :note, :autofocus => true, class: "form-control monospaced-control", placeholder: t(:optional_note) %>
+      </div>
+    </div>
 
     <div class="form-group">
-  <%= f.label :worked_until, t(:work_done) %>
-  <div class='input-group date' id='worked_until_picker'>
-    <input type='text' class="form-control" name='report[worked_until]' value='<%= if defined? @report.worked_until.strftime then @report.worked_until.strftime("%R") else '' end %>' />
-<span class="input-group-addon">
-    <span class="glyphicon glyphicon-time"></span>
-</span>
-  </div>
-  <script type="text/javascript">
-      $(function () {
-          $('#worked_until_picker').datetimepicker({
-              format: 'HH:mm',
-              locale: '<%= locale %>'
-          });
-      });
-  </script>
-</div>
-
-<%= f.label :note, t(:note) %>
-<div class="row">
-  <div class="col-xs-12">
-    <%= f.text_field :note, :autofocus => true, class: "form-control monospaced-control", placeholder: t(:optional_note) %>
-  </div>
-</div>
-
-<div class="form-group">
-  <%= f.label :content_md, t(:report) %>
-  <div class="row">
-    <div class="col-xs-12">
-      <%= f.text_area :content_md, rows: 15, class: "form-control monospaced-control", placeholder: t(:tasks_markdown) %>
+      <%= f.label :content_md, t(:report) %>
+      <div class="row">
+        <div class="col-xs-12">
+          <%= f.text_area :content_md, rows: 15, class: "form-control monospaced-control", placeholder: t(:tasks_markdown) %>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
 <% end %>

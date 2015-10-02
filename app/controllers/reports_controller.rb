@@ -16,10 +16,6 @@ class ReportsController < BaseController
       @year = Time.now.year
     end
     if @month
-      # TODO I think I don't need that anywhere anymore ...
-      #@secs_in_month = 0
-      #current_user.reports.by_month(@month, @year).order(:workday).each { |w| @secs_in_month += w.worked_seconds}
-
       @days = []
       Time.days_in_month(@month, @year).times { |i| @days << "#{@year}-#{format('%02d', @month)}-#{format('%02d', i+1)}"}
 
@@ -114,7 +110,13 @@ class ReportsController < BaseController
 
   def destroy
     @report.destroy
-    redirect_to reports_path, notice: t('alert.deleted')
+    # If you are using XHR requests other than GET or POST and redirecting
+    # after the request then some browsers will follow the redirect using the
+    # original request method. This may lead to undesirable behavior such as a
+    # double DELETE. To work around this you can return a 303 See Other status
+    # code which will be followed using a GET request.
+    # (api.rubyonrails.org/classes/ActionController/Redirecting.html)
+    redirect_to action: :index, notice: t('alert.deleted'), status: 303
   end
 
 

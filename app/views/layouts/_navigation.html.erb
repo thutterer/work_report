@@ -16,6 +16,12 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
+        <% if controller.controller_name == "reports" %>
+          <li id="todayButton"><a href="#"><%= t(:today).capitalize %></a></li>
+          <li id="weeksButton"><a href="#"><%= t(:weeks) %></a></li>
+          <li id="monthButton"><a href="#"><%= t(:month) %></a></li>
+        <% end %>
+
         <%# render 'layouts/navigation_links' %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -24,11 +30,11 @@
             <li><%= link_to t('user.sign_up'), new_user_registration_path %></li>
         <% else %>
             <li class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                 <i class="fa fa-user"></i>
                 <%= current_user.firstname %>
                 <span class="caret"></span>
-              </button>
+              </a>
               <ul class="dropdown-menu" aria-labelledby="userDropdownMenu">
                 <li><%= link_to t('user.edit_account'), edit_user_registration_path %></li>
                 <% if current_user.admin? %>
@@ -39,7 +45,6 @@
             </li>
         <% end %>
       </ul>
-      <div id="clock"/>
     </div>
   </div>
 </nav>
