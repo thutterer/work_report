@@ -73,7 +73,7 @@ class ReportsController < BaseController
 
   def new
     workday = DateTime.parse(params[:workday]) rescue Time.now
-    @report = Report.new(title: workday.strftime("%R"), workday: workday, worked_from: Time.now)
+    @report = Report.new(title: workday.strftime("%R"), workday: workday, worked_from: round_down(Time.now))
 
     respond_to do |format|
       format.html { render :template => 'shared/reports/new' }
@@ -140,5 +140,17 @@ class ReportsController < BaseController
     )
   end
 
+  def round_down(time)
+    case time.min
+    when 0..14
+      time.min.minutes.ago
+    when 15..29
+      (time.min-15).minutes.ago
+    when 30..44
+      (time.min-30).minutes.ago
+    else
+      (time.min-45).minutes.ago
+    end + 1.hour # FIXME ugly timezone workaround
+  end
 
 end

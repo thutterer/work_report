@@ -53,7 +53,7 @@
         <div class="form-group">
           <%= f.label :break_duration, t(:break_duration) %>
           <div class='input-group date timepicker' id='break_duration_picker'>
-            <input type='text' class="form-control" name='report[break_duration]' value='<%= if defined? @report.break_duration.strftime then @report.break_duration.strftime("%R") else '' end %>' />
+            <input type='text' class="form-control" name='report[break_duration]' value='<%= if defined? @report.break_duration.strftime then @report.break_duration.strftime("%R") else '0:30' end %>' />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-cutlery"></span>
             </span>
